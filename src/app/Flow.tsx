@@ -113,7 +113,11 @@ function Flow() {
         id: "Idea-"+Math.random()*100,
         type,
         position:position as XYPosition,
-        data: { label: `${type} node` ,title:'this is a test'},
+        data: {
+            label: `${type} node` ,
+            title:'this is a test',
+            toolbarPosition:Position.Bottom
+          },
       };
 
       setNodes((nds) => nds.concat(newNode));
@@ -184,12 +188,12 @@ function Flow() {
       minZoom={0.05}
       maxZoom={100}
     >
-      <Panel position={"top-left"}> 
+      <Panel position={"top-left"}>
           <div className="flex flex-col gap-3">
           <button onClick={saveChanges} className='bg-stone-800 rounded-[8px] text-stone-200 text-lg font-semibold px-2 py-2 cursor-pointer'><FaSave/></button>
           <h1 onDragStart={(event)=>onDragStart(event,'IdeaNode')} className='bg-stone-800 rounded-[8px] text-stone-200 text-lg font-semibold px-2 py-2 cursor-auto ' draggable><FaNetworkWired/></h1>
           <div className="dndnode" onDragStart={(event) => onDragStart(event, 'default')} draggable={true}>
-        Default Node
+            Default Node
           </div>
           </div>
       </Panel>
