@@ -6,7 +6,7 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import { db } from "./db";
-import NextAuth from "next-auth/next";
+import nextAuth from "next-auth";
 import { Adapter } from "next-auth/adapters";
 
 
@@ -37,7 +37,7 @@ declare module "next-auth" {
  *
  * @see https://next-auth.js.org/configuration/options
  */
- const authOptions: NextAuthOptions = {
+ export const authOptions: NextAuthOptions = {
   callbacks: {
     
     session: ({ session, user }) => {
@@ -48,9 +48,8 @@ declare module "next-auth" {
         ...session.user,
         id: user.id,
       },
-
-      
     }},
+ 
   
   redirect:()=>("/"),
 },
@@ -70,21 +69,18 @@ declare module "next-auth" {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  secret:process.env.NEXTAUTH_SECRET
 
-  pages:{
-    signIn:'/auth',
-    signOut:'/auth'
 
-  }
   
 };
 
 
-
 export const {
+  handlers: { GET, POST },
+  auth,
+  signIn,
+  signOut,
+} =nextAuth(authOptions)
 
-    handlers: { GET, POST },
-  
-    auth
-  
-  } =NextAuth(authOptions)
+
