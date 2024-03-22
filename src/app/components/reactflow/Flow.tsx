@@ -6,6 +6,7 @@ import IdeaNode from './nodes/IdeaNode';
 import BiEdge from './edges/BiEdge';
 import EdgeWithButton from './edges/EdgeWithButton';
 import { FaNetworkWired, FaSave } from 'react-icons/fa';
+import { NodeSelectorBar } from './NodeSelectorBar';
 
 const nodeTypes ={
   'CustomNode':CustomNode,
@@ -188,7 +189,7 @@ function Flow() {
       minZoom={0.05}
       maxZoom={100}
     >
-      <Panel position={"top-left"}>
+      <Panel position={"bottom-right"}>
           <div className="flex flex-col gap-3">
           <button onClick={saveChanges} className='bg-stone-800 rounded-[8px] text-stone-200 text-lg font-semibold px-2 py-2 cursor-pointer'><FaSave/></button>
           <h1 onDragStart={(event)=>onDragStart(event,'IdeaNode')} className='bg-stone-800 rounded-[8px] text-stone-200 text-lg font-semibold px-2 py-2 cursor-auto ' draggable><FaNetworkWired/></h1>
@@ -197,7 +198,10 @@ function Flow() {
           </div>
           </div>
       </Panel>
-      <Background className='bg-white ' color={'#3097ff'} variant={BackgroundVariant.Lines} lineWidth={0.09}/>
+      <Panel position='top-left' >
+        <NodeSelectorBar/>
+      </Panel>
+      <Background className='bg-lime-50 ' color={'#3097ff'} variant={BackgroundVariant.Lines} lineWidth={0.09}/>
         <Controls/>
       </ReactFlow>
     </div>
