@@ -183,8 +183,7 @@ export function DashboardSidebar() {
           Upgrade to PRO
         </Typography>
         <Typography variant="small" className="font-normal opacity-80">
-          Upgrade to Material Tailwind PRO and get even more components, plugins, advanced features
-          and premium.
+          Upgrade to Branaz PRO and get even more nodes, plugins, advanced features and so much more.
         </Typography>
         <div className="mt-4 flex gap-3">
           <Typography

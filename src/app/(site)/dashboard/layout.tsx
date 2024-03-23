@@ -7,7 +7,7 @@ const layout = ({children}:{children:React.ReactNode}) => {
     <div className="sidebar flex-grow max-h-screen">
       <DashboardSidebar/>
     </div>
-    <div className="p-0 m-0 bg-lime-600 w-full min-h-screen  overflow-auto border-l-2 border-lime-200">
+    <div className="p-0 m-0 w-full min-h-screen  overflow-auto border-l-2 border-lime-200">
       {
         children
       }

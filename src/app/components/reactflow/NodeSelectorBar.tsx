@@ -113,7 +113,7 @@ export function NodeSelectorBar() {
                   <Typography
                     as="li"
                     onClick={()=>alert("this is a test .")}
-                    onDragCapture={(event)=>onDragStart(event,'IdeaNode')}
+                    // onDragCapture={(event)=>onDragStart(event,'IdeaNode')}
                     variant="small"
                     color="red"
                     onDragStart={(event)=>onDragStart(event,'IdeaNode')} className='flex flex-col justify-center items-center gap-2 bg-stone-800 rounded-[8px] text-stone-200 font-semibold px-2 py-2 cursor-auto ' draggable>

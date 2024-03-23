@@ -22,19 +22,21 @@ const style = {
 
 const BiDirectionalNode = ({ data }: NodeProps) => {
   return (    
-    <Card className={`relative flex flex-col gap-6 justify-center items-center min-w-fit min-h-[5rem] h-fit max-h-[20rem] ${data.label>5? 'bg-[#85e07f]':'bg-[#b6ffce]'} text-stone-300 font-bold text-lg px-14 py-10 rounded-[15px] shadow-lg`}>
+    <Card onClick={()=>alert(`the node ${data.name }-${data.label} is clicked.`)} className={`relative flex flex-col gap-6 justify-center items-center min-w-fit min-h-fit max-h-[40rem] ${data.label>5? 'bg-[#e0c17f]':'bg-[#eafff0]'}  text-blue-gray-900 font-bold text-lg p-24 rounded-[15px] shadow-lg shadow-[rgba(30,30,30,1)] border-2 border-lime-600`}>
       <NodeResizeControl minHeight={250} minWidth={400}>
-              <div className="w-full rounded-full p-2 bg-stone-800 text-sm font-semibold"></div>
+              <div className="rounded-full p-2 bg-stone-800 text-sm font-semibold h-2 w-2 "></div>
             </NodeResizeControl>
-            <NodeToolbar isVisible={true} position={data.toolbarPosition} className={`flex ${([Position.Left,Position.Right].includes(data.toolbarPosition))?'flex-col text-3xl':'flex-row'} gap-4 ${Math.random() >0?'bg-[#394738]':'bg-[#245f20]'} rounded-[5px] text-stone-300 text-sm px-2`}>
-              <button className='p-1'><FaEdit/></button>             
-              <button className='p-1'><FaCopy/></button>
-            {/* <button>expand</button> */}
-      </NodeToolbar>
-      <CardHeader floated={false} color="blue-gray">
-          {data.label}
+            <NodeToolbar isVisible={true} position={data.toolbarPosition} className={`flex ${([Position.Left,Position.Right].includes(data.toolbarPosition))?'flex-col text-[2px]':'flex-row'} gap-4 ${Math.random() >0?'bg-[#394738]':'bg-[#245f20]'} rounded-[5px] text-stone-300 text-sm px-2`}>
+                <button className='p-1'><FaEdit/></button>             
+                <button className='p-1'><FaCopy/></button>
+              {/* <button>expand</button> */}
+            </NodeToolbar>
+      <CardHeader  color="blue-gray" className='min-h-fit'>
+            <Typography variant="h1" color="black" className="font-bold">
+              {data.label }
+            </Typography>
       </CardHeader>
-      <CardBody>
+      <CardBody color='rgba(30,30,30,1)'>
         <div className="mb-3 flex items-center justify-between">
           <Typography variant="h5" color="blue-gray" className="font-medium">
            {data.label }
@@ -58,7 +60,7 @@ const BiDirectionalNode = ({ data }: NodeProps) => {
             5.0
           </Typography>
         </div>
-        <Typography color="gray">
+        <Typography color="black">
           Enter a freshly updated and thoughtfully furnished peaceful home
           surrounded by ancient trees, stone walls, and open meadows.
         </Typography>
