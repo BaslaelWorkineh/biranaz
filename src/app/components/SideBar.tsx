@@ -1,5 +1,5 @@
 'use client'
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Typography,
@@ -21,7 +21,9 @@ import {
   UserCircleIcon,
   Cog6ToothIcon,
   InboxIcon,
+  CubeIcon,
   PowerIcon,
+  UserGroupIcon
 } from "@heroicons/react/24/solid";
 import {
   ChevronRightIcon,
@@ -30,15 +32,53 @@ import {
   MagnifyingGlassIcon,
   PlusIcon
 } from "@heroicons/react/24/outline";
+import { Team, Workspace } from "@prisma/client";
+import { CreateWorkspaceModal } from "./modals/CreateWorkspaceModal";
  
 export function DashboardSidebar() {
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
+  const [workspaces,setWorkspaces] = useState<Workspace[]>([])
+  const [teams,setTeams]=useState<Team[]>([])
  
   const handleOpen = (value: React.SetStateAction<number>) => {
     setOpen(open === value ? 0 : value);
   };
- 
+
+  const fetch_workspace = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/workspace");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json(); // Assuming response contains JSON data
+      setWorkspaces(data);
+    } catch (error) {
+      console.error("Error fetching workspaces:", error);
+    }
+  };
+
+  const fetch_teams =async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/team");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json(); // Assuming response contains JSON data
+      setTeams(data);
+    } catch (error) {
+      console.error("Error fetching workspaces:", error);
+    }
+  };
+
+  
+  useEffect(() => {
+
+    fetch_workspace();
+    fetch_teams();
+  }, []);
+  
+
   return (
     <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 flex items-center gap-4 p-4">
@@ -58,13 +98,15 @@ export function DashboardSidebar() {
             <ChevronDownIcon
               strokeWidth={2.5}
               className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
-            />
+            />        
+
+
           }
         >
           <ListItem className="p-0" selected={open === 1}>
             <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
               <ListItemPrefix>
-                <PresentationChartBarIcon className="h-5 w-5" />
+                <CubeIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-normal">
                 Workspaces
@@ -73,39 +115,28 @@ export function DashboardSidebar() {
           </ListItem>
           <AccordionBody className="py-1">
             <List className="p-0">
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Mathematics
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Web Developement
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Social Growth
-              </ListItem>
-              <ListItem>
+              
+              {/* <ListItem>
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
                 Bible Study
-              </ListItem>
-              <ListItem>
-                
-                
-                <Button fullWidth variant="text" size="sm" className="flex flex-row gap-2 items-center justify-center">
-                <ListItemPrefix>
-                  <PlusIcon strokeWidth={3} className="h-6 w-6" />
-                </ListItemPrefix>
-                  <span>New Workspace</span>
-                </Button>
+              </ListItem> */}
+              {
+                workspaces && workspaces.map((workspace,index)=>(
+                  <ListItem key={workspace.id}>
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      {
+                        workspace.title
+                      }
+                </ListItem>
+                ))
+              }
+
+              <ListItem ripple={false}>               
+                <CreateWorkspaceModal/>
               </ListItem>
               
             
@@ -124,26 +155,42 @@ export function DashboardSidebar() {
           <ListItem className="p-0" selected={open === 2}>
             <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
               <ListItemPrefix>
-                <ShoppingBagIcon className="h-5 w-5" />
+                <UserGroupIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-normal">
                 Teams
               </Typography>
             </AccordionHeader>
           </ListItem>
+          
           <AccordionBody className="py-1">
             <List className="p-0">
               <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Elora BS-team
+                  <ListItemPrefix>
+                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                  </ListItemPrefix>
+                  Elora BS-team
               </ListItem>
+              {
+                teams && teams.map((team,index)=>(
+                  <ListItem key={team.id}>
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      {
+                        team.name
+                      }
+                </ListItem>
+                ))
+              }
+              
               <ListItem>
+                <Button fullWidth variant="text" size="sm" className="flex flex-row gap-2 items-center justify-center">
                 <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                  <PlusIcon strokeWidth={3} className="h-6 w-6" />
                 </ListItemPrefix>
-                FarmerBros
+                  <span>New Team</span>
+                </Button>
               </ListItem>
             </List>
           </AccordionBody>
