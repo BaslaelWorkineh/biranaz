@@ -33,7 +33,7 @@ export function CreateWorkspaceModal() {
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="mx-auto w-full max-h-[95%]">
+        <Card  className="mx-auto w-full max-h-[95%] text-black">
           <CardBody className="flex flex-col gap-4">
             <Typography variant="h4" color="blue-gray">
               Create New Workspace
@@ -41,18 +41,18 @@ export function CreateWorkspaceModal() {
             <Typography
               className="mb-3 font-normal"
               variant="paragraph"
-              color="gray"
+             
             >
               Enter all the necessary informaton about the workspace.
             </Typography>
             <Typography className="-mb-2" variant="h6">
               Name
             </Typography>
-            <Input color="blue-gray" variant="standard" label="text" size="lg" crossOrigin={undefined} />
+            <Input  variant="standard" label="text" size="lg" crossOrigin={undefined} />
             <Typography className="-mb-2" variant="h6">
               Description
             </Typography>
-            <Textarea color="blue-gray" variant="standard" label="Standard" placeholder="workspace description goes here." />
+            <Textarea className="text-black" variant="standard" label="Standard" />
             <div className="-ml-2.5 -mt-3">
               <Checkbox label="Remember Me" crossOrigin={undefined} />
             </div>
