@@ -169,7 +169,8 @@ function Flow() {
   }
 
   return (
-    <div className='h-screen'>
+    <div className='relative h-screen'>
+      <small className="absolute right-0 top-0 px-3 py-1 rounded-bl-[10px] bg-brown-900 text-white text-xs z-50">verson 1.0</small>
       <ReactFlow
       onInit={setReactFlowInstance}
       onDrop={onDrop}
