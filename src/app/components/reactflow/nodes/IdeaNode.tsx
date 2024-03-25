@@ -22,7 +22,7 @@ const style = {
 
 const BiDirectionalNode = ({ data }: NodeProps) => {
   return (    
-    <Card onClick={()=>alert(`the node ${data.name }-${data.label} is clicked.`)} className={`relative flex flex-col gap-6 justify-center items-center min-w-fit min-h-fit max-h-[40rem] ${data.label>5? 'bg-[#e0c17f]':'bg-[#eafff0]'}  text-blue-gray-900 font-bold text-lg p-24 rounded-[15px] shadow-lg shadow-[rgba(30,30,30,1)] border-2 border-lime-600`}>
+    <Card onClick={()=>alert(`the node ${data.name }-${data.label} is clicked.`)} className={`relative flex flex-col gap-6 justify-center items-center min-w-fit min-h-fit max-h-[40rem] ${data.label>5? 'bg-[#e0c17f]':'bg-[rgb(242,243,216)]'}  text-blue-gray-900 font-bold text-lg p-24 rounded-[15px] shadow-lg shadow-[rgba(30,30,30,1)] border-2 border-lime-600`}>
       <NodeResizeControl minHeight={250} minWidth={400}>
               <div className="rounded-full p-2 bg-stone-800 text-sm font-semibold h-2 w-2 "></div>
             </NodeResizeControl>
