@@ -45,39 +45,6 @@ const nodes = [
     }
   },
 ];
-const initialEdges: Edge[] = (localStorage.getItem("information"))?(JSON.parse(localStorage.getItem("information") as string)).edges:[
-  {
-    id: 'edge-button',
-    source: 'bi-2',
-    target: 'self-1',
-    type: 'buttonedge',
-  },
-  {
-    id: 'edge-bi-1',
-    source: 'bi-1',
-    target: 'bi-2',
-    type: 'bidirectional',
-    sourceHandle: 'right',
-    targetHandle: 'left',
-    markerEnd: { type: MarkerType.ArrowClosed },
-  },
-  {
-    id: 'edge-bi-2',
-    source: 'bi-2',
-    target: 'bi-1',
-    type: 'bidirectional',
-    sourceHandle: 'left',
-    targetHandle: 'right',
-    markerEnd: { type: MarkerType.ArrowClosed },
-  },
-  {
-    id: 'edge-self',
-    source: 'self-1',
-    target: 'bi-1',
-    type: 'bidirectional',
-    markerEnd: { type: MarkerType.Arrow },
-  },
-];
 
 function Flow() {
   const [nodes,setNodes, onNodesChange] = useNodesState([]); 
@@ -86,7 +53,42 @@ function Flow() {
 
   useEffect(()=>{
     const initialNodes  = (localStorage.getItem("information"))?JSON.parse(localStorage.getItem("information") as string).nodes:generateRandomNodes(2)
+    const initialEdges: Edge[] = (localStorage.getItem("information"))?(JSON.parse(localStorage.getItem("information") as string)).edges:[
+      {
+        id: 'edge-button',
+        source: 'bi-2',
+        target: 'self-1',
+        type: 'buttonedge',
+      },
+      {
+        id: 'edge-bi-1',
+        source: 'bi-1',
+        target: 'bi-2',
+        type: 'bidirectional',
+        sourceHandle: 'right',
+        targetHandle: 'left',
+        markerEnd: { type: MarkerType.ArrowClosed },
+      },
+      {
+        id: 'edge-bi-2',
+        source: 'bi-2',
+        target: 'bi-1',
+        type: 'bidirectional',
+        sourceHandle: 'left',
+        targetHandle: 'right',
+        markerEnd: { type: MarkerType.ArrowClosed },
+      },
+      {
+        id: 'edge-self',
+        source: 'self-1',
+        target: 'bi-1',
+        type: 'bidirectional',
+        markerEnd: { type: MarkerType.Arrow },
+      },
+    ];
+    
     setNodes(initialNodes)
+    setEdges(initialEdges)
   },[])
 
 
