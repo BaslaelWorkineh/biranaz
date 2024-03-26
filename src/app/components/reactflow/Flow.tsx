@@ -86,7 +86,7 @@ function Flow() {
 
   useEffect(()=>{
     const initialNodes  = (localStorage.getItem("information"))?JSON.parse(localStorage.getItem("information") as string).nodes:generateRandomNodes(2)
-    useNodesState(initialNodes)
+    setNodes(initialNodes)
   },[])
 
 
