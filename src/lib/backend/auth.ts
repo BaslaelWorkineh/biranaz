@@ -1,9 +1,9 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import GitHubProvider from "next-auth/providers/github";
 import {
-  getServerSession,
+ 
   type DefaultSession,
-  type NextAuthOptions,
+
 } from "next-auth";
 import { db } from "./db";
 import nextAuth from "next-auth";
@@ -37,7 +37,7 @@ declare module "next-auth" {
  *
  * @see https://next-auth.js.org/configuration/options
  */
- export const authOptions: NextAuthOptions = {
+ export const authOptions = {
   callbacks: {
     
     session: ({ session, user }) => {
