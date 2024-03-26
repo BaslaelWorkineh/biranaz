@@ -39,7 +39,7 @@ export async function GET(req:NextRequest){
 //    const postData =await req.json()
    
 
-//    const result = await AddPost((postData as any))
+//    const result = await AddPost((postData as any))  some changes
 
 //    return NextResponse.json(result)
 // }
