@@ -34,12 +34,22 @@ import {
 } from "@heroicons/react/24/outline";
 import { Team, Workspace } from "@prisma/client";
 import { CreateWorkspaceModal } from "./modals/CreateWorkspaceModal";
+
+type WorkspaceFetchType={
+  data:Workspace[],
+  status:'OK'|'FAIL'|'LOADING'
+}
+type TeamsFetchType={
+  data:Team[],
+  status:'OK'|'FAIL'|'LOADING'
+}
  
+
 export function DashboardSidebar() {
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
-  const [workspaces,setWorkspaces] = useState<Workspace[]>([])
-  const [teams,setTeams]=useState<Team[]>([])
+  const [workspaces,setWorkspaces] = useState<WorkspaceFetchType>({data:[],status:'LOADING'})
+  const [teams,setTeams]=useState<TeamsFetchType>({data:[],status:'LOADING'})
  
   const handleOpen = (value: React.SetStateAction<number>) => {
     setOpen(open === value ? 0 : value);
@@ -49,12 +59,16 @@ export function DashboardSidebar() {
     try {
       const response = await fetch("http://localhost:3000/api/workspace");
       if (!response.ok) {
+        setWorkspaces({...workspaces,status:'FAIL'} as WorkspaceFetchType)
         throw new Error("Network response was not ok");
       }
-      const data = await response.json(); // Assuming response contains JSON data
-      setWorkspaces(data);
+      const data = await response.json();
+      // setWorkspaces(data);
+      setWorkspaces({data,status:'OK'} as WorkspaceFetchType)
     } catch (error) {
+
       console.error("Error fetching workspaces:", error);
+      fetch_workspace()
     }
   };
 
@@ -62,12 +76,15 @@ export function DashboardSidebar() {
     try {
       const response = await fetch("http://localhost:3000/api/team");
       if (!response.ok) {
+        setTeams({...teams,status:'FAIL'} as TeamsFetchType)
         throw new Error("Network response was not ok");
       }
       const data = await response.json(); // Assuming response contains JSON data
-      setTeams(data);
-    } catch (error) {
+      // setTeams(data);
+      setTeams({data,status:'OK'} as TeamsFetchType)
+    } catch (error) { 
       console.error("Error fetching workspaces:", error);
+      fetch_teams()
     }
   };
 
@@ -123,7 +140,11 @@ export function DashboardSidebar() {
                 Bible Study
               </ListItem> */}
               {
-                workspaces && workspaces.map((workspace,index)=>(
+                //check if the workspaces are fetched or not
+                (workspaces?.status=='OK')?(
+                  
+                  //check if the workspace is empty or not
+                  (workspaces.data.length) ? (workspaces.data.map((workspace,index)=>(
                   <ListItem key={workspace.id}>
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -131,8 +152,53 @@ export function DashboardSidebar() {
                       {
                         workspace.title
                       }
-                </ListItem>
+                  </ListItem>
                 ))
+
+                    ):(
+                      <div className="">No Workspaces Found</div>
+                    )
+
+
+                ):(
+                  //check if the workspace fetch is loading or not
+                    (workspaces?.status=='LOADING') ? (
+                      <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
+                          <ListItem className="w-full flex gap-1 items-center h-6">
+                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+                            &nbsp;
+                            &nbsp;
+                            </ListItemPrefix>
+                            <div className="w-full bg-blue-gray-50 rounded-md">
+                              &nbsp;
+                              &nbsp;
+                            </div>
+                          </ListItem>
+                          <ListItem className="w-full flex gap-1 items-center h-6">
+                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+                            &nbsp;
+                            &nbsp;
+                            </ListItemPrefix>
+                            <div className="w-full bg-blue-gray-50 rounded-md">
+                              &nbsp;
+                              &nbsp;
+                            </div>
+                          </ListItem>
+                          <ListItem className="w-full flex gap-1 items-center h-6">
+                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+                            &nbsp;
+                            &nbsp;
+                            </ListItemPrefix>
+                            <div className="w-full bg-blue-gray-50 rounded-md">
+                              &nbsp;
+                              &nbsp;
+                            </div>
+                          </ListItem>
+                      </div>
+                    ):(
+                      <div className="">Something Went Wrong</div>
+                    )
+                )
               }
 
               <ListItem ripple={false}>               
@@ -165,14 +231,13 @@ export function DashboardSidebar() {
           
           <AccordionBody className="py-1">
             <List className="p-0">
-              <ListItem>
-                  <ListItemPrefix>
-                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                  </ListItemPrefix>
-                  Elora BS-team
-              </ListItem>
+
               {
-                teams && teams.map((team,index)=>(
+                //check if the teams are fetched or not
+                (teams?.status=='OK')?(
+                  
+                  //check if the teams list is empty or not
+                  (teams.data.length) ? (teams.data.map((team,index)=>(
                   <ListItem key={team.id}>
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -180,9 +245,55 @@ export function DashboardSidebar() {
                       {
                         team.name
                       }
-                </ListItem>
+                  </ListItem>
                 ))
+
+                    ):(
+                      <div className="">No Teams Found</div>
+                    )
+
+
+                ):(
+                  //check if the workspace fetch is loading or not
+                    (workspaces?.status=='LOADING') ? (
+                      <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
+                          <ListItem className="w-full flex gap-1 items-center h-6">
+                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+                            &nbsp;
+                            &nbsp;
+                            </ListItemPrefix>
+                            <div className="w-full bg-blue-gray-50 rounded-md">
+                              &nbsp;
+                              &nbsp;
+                            </div>
+                          </ListItem>
+                          <ListItem className="w-full flex gap-1 items-center h-6">
+                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+                            &nbsp;
+                            &nbsp;
+                            </ListItemPrefix>
+                            <div className="w-full bg-blue-gray-50 rounded-md">
+                              &nbsp;
+                              &nbsp;
+                            </div>
+                          </ListItem>
+                          <ListItem className="w-full flex gap-1 items-center h-6">
+                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+                            &nbsp;
+                            &nbsp;
+                            </ListItemPrefix>
+                            <div className="w-full bg-blue-gray-50 rounded-md">
+                              &nbsp;
+                              &nbsp;
+                            </div>
+                          </ListItem>
+                      </div>
+                    ):(
+                      <div className="">Something Went Wrong</div>
+                    )
+                )
               }
+
               
               <ListItem>
                 <Button fullWidth variant="text" size="sm" className="flex flex-row gap-2 items-center justify-center">

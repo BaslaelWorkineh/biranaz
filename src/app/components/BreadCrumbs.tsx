@@ -36,7 +36,7 @@ export function Breadcrumb() {
     
       {
         breadCrumbs.map((crumb)=>(
-            <a href={crumb.path} className="opacity-60">
+            <a key={crumb.name} href={crumb.path} className="opacity-60">
                 <span>{crumb.name}</span>
             </a>
         ))
