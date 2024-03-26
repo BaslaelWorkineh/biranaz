@@ -34,6 +34,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Team, Workspace } from "@prisma/client";
 import { CreateWorkspaceModal } from "./modals/CreateWorkspaceModal";
+import { getDomain } from "base/lib/utils";
 
 type WorkspaceFetchType={
   data:Workspace[],
@@ -57,7 +58,7 @@ export function DashboardSidebar() {
 
   const fetch_workspace = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/workspace");
+      const response = await fetch(`${getDomain()}/api/workspace`);
       if (!response.ok) {
         setWorkspaces({...workspaces,status:'FAIL'} as WorkspaceFetchType)
         throw new Error("Network response was not ok");
@@ -74,7 +75,7 @@ export function DashboardSidebar() {
 
   const fetch_teams =async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/team");
+      const response = await fetch(`${getDomain()}/api/team`);
       if (!response.ok) {
         setTeams({...teams,status:'FAIL'} as TeamsFetchType)
         throw new Error("Network response was not ok");
