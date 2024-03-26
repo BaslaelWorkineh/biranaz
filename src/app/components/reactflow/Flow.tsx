@@ -1,4 +1,4 @@
-import { DragEvent, useCallback, useState } from 'react';
+import { DragEvent, useCallback, useEffect, useState } from 'react';
 import ReactFlow, { Controls, Background, useEdgesState, useNodesState, applyNodeChanges, NodeChange, BackgroundVariant, addEdge, Edge, Connection, MarkerType, ConnectionMode, Position, Panel,ReactFlowInstance, Node, XYPosition } from 'reactflow';
 import 'reactflow/dist/style.css';
 import CustomNode from './nodes/customNode';
@@ -80,10 +80,15 @@ const initialEdges: Edge[] = (localStorage.getItem("information"))?(JSON.parse(l
 ];
 
 function Flow() {
-  const initialNodes  = (localStorage.getItem("information"))?JSON.parse(localStorage.getItem("information") as string).nodes:generateRandomNodes(2)
-  const [nodes,setNodes, onNodesChange] = useNodesState(initialNodes); 
+  const [nodes,setNodes, onNodesChange] = useNodesState([]); 
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance,setReactFlowInstance] = useState<ReactFlowInstance>()
+
+  useEffect(()=>{
+    const initialNodes  = (localStorage.getItem("information"))?JSON.parse(localStorage.getItem("information") as string).nodes:generateRandomNodes(2)
+    useNodesState(initialNodes)
+  },[])
+
 
   const onConnect = useCallback((params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)), []);
   const onDragOver = useCallback((event:any) => {
