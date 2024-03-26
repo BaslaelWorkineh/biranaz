@@ -48,7 +48,7 @@ const nodes = [
 
 function Flow() {
   const [nodes,setNodes, onNodesChange] = useNodesState([]); 
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance,setReactFlowInstance] = useState<ReactFlowInstance>()
 
   useEffect(()=>{
