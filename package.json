@@ -14,6 +14,7 @@
     "@heroicons/react": "^2.1.1",
     "@material-tailwind/react": "^2.1.9",
     "@prisma/client": "^5.11.0",
+    "@tanstack/react-query": "^5.28.8",
     "clsx": "^2.1.0",
     "crypto-js": "3.1.9-1",
     "next": "14.1.3",

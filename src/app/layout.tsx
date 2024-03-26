@@ -5,6 +5,7 @@ import "./globals.css";
 import { ReactFlowProvider } from "reactflow";
 import FlowLayout from "base/layouts/reactflowLayout";
 import AuthSession from "base/layouts/sessionProvider";
+import QueryClientLayout from "base/layouts/QueryClient";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-            <AuthSession>
-                <FlowLayout>
-                  {children}
-                </FlowLayout>
-            </AuthSession>
+            <QueryClientLayout>
+              <AuthSession>
+                  <FlowLayout>
+                    {children}
+                  </FlowLayout>
+              </AuthSession>
+            </QueryClientLayout>
           </body>
     </html>
   );

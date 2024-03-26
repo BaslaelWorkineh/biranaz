@@ -17,6 +17,9 @@ dependencies:
   '@prisma/client':
     specifier: ^5.11.0
     version: 5.11.0(prisma@5.11.0)
+  '@tanstack/react-query':
+    specifier: ^5.28.8
+    version: 5.28.8(react@18.2.0)
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
@@ -642,6 +645,19 @@ packages:
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /@tanstack/query-core@5.28.8:
+    resolution: {integrity: sha512-cx64XHeB0kvKxFt22ibvegPeOxnaWVFUbAuhXoIrb7+XePEexHWoB9Kq5n9qroNPkRwQZwgFAP9HNbQz5ohoIg==}
+    dev: false
+
+  /@tanstack/react-query@5.28.8(react@18.2.0):
+    resolution: {integrity: sha512-4XYhoRmcThqziB32HsyiBLNXJcukaeGfYwAQ+fZqUUE3ZP4oB/Zy41UJdql+TUg98+vsezfbixxAwAbGHfc5Hg==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@tanstack/query-core': 5.28.8
+      react: 18.2.0
     dev: false
 
   /@types/cookie@0.6.0:

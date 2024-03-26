@@ -35,23 +35,16 @@ import {
 import { Team, Workspace } from "@prisma/client";
 import { CreateWorkspaceModal } from "./modals/CreateWorkspaceModal";
 import { getDomain } from "base/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
-type WorkspaceFetchType={
-  data:Workspace[],
-  status:'OK'|'FAIL'|'LOADING'
-}
-type TeamsFetchType={
-  data:Team[],
-  status:'OK'|'FAIL'|'LOADING'
-}
+
  
 
 export function DashboardSidebar() {
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
-  const [workspaces,setWorkspaces] = useState<WorkspaceFetchType>({data:[],status:'LOADING'})
-  const [teams,setTeams]=useState<TeamsFetchType>({data:[],status:'LOADING'})
- 
+
   const handleOpen = (value: React.SetStateAction<number>) => {
     setOpen(open === value ? 0 : value);
   };
@@ -60,16 +53,17 @@ export function DashboardSidebar() {
     try {
       const response = await fetch(`${getDomain()}/api/workspace`);
       if (!response.ok) {
-        setWorkspaces({...workspaces,status:'FAIL'} as WorkspaceFetchType)
+        // setWorkspaces({...workspaces,status:'FAIL'} as WorkspaceFetchType)
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
       // setWorkspaces(data);
-      setWorkspaces({data,status:'OK'} as WorkspaceFetchType)
+      // setWorkspaces({data,status:'OK'} as WorkspaceFetchType)
+      return data
     } catch (error) {
 
       console.error("Error fetching workspaces:", error);
-      fetch_workspace()
+      // fetch_workspace()
     }
   };
 
@@ -77,24 +71,35 @@ export function DashboardSidebar() {
     try {
       const response = await fetch(`${getDomain()}/api/team`);
       if (!response.ok) {
-        setTeams({...teams,status:'FAIL'} as TeamsFetchType)
+        // setTeams({...teams,status:'FAIL'} as TeamsFetchType)
         throw new Error("Network response was not ok");
       }
       const data = await response.json(); // Assuming response contains JSON data
       // setTeams(data);
-      setTeams({data,status:'OK'} as TeamsFetchType)
+      // setTeams({data,status:'OK'} as TeamsFetchType)
+      return data
     } catch (error) { 
       console.error("Error fetching workspaces:", error);
-      fetch_teams()
+      // fetch_teams()
     }
   };
 
   
-  useEffect(() => {
 
-    fetch_workspace();
-    fetch_teams();
-  }, []);
+  const {data:workspaces,isLoading:workspacesLoading,error:workspaceError}= useQuery({
+    queryFn:()=>fetch_workspace(),
+    queryKey:["workspace"]
+  })
+
+  const {data:teams,isLoading:teamsLoading,error:teamsError}= useQuery({
+    queryFn:()=>fetch_teams(),
+    queryKey:["team"]
+  })
+  // useEffect(() => {
+
+  //   fetch_workspace();
+  //   fetch_teams();
+  // }, []);
   
 
   return (
@@ -133,74 +138,8 @@ export function DashboardSidebar() {
           </ListItem>
           <AccordionBody className="py-1">
             <List className="p-0">
-              
-              {/* <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Bible Study
-              </ListItem> */}
-              {
-                //check if the workspaces are fetched or not
-                (workspaces?.status=='OK')?(
-                  
-                  //check if the workspace is empty or not
-                  (workspaces.data.length) ? (workspaces.data.map((workspace,index)=>(
-                  <ListItem key={workspace.id}>
-                      <ListItemPrefix>
-                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                      </ListItemPrefix>
-                      {
-                        workspace.title
-                      }
-                  </ListItem>
-                ))
-
-                    ):(
-                      <div className="">No Workspaces Found</div>
-                    )
-
-
-                ):(
-                  //check if the workspace fetch is loading or not
-                    (workspaces?.status=='LOADING') ? (
-                      <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
-                          <ListItem className="w-full flex gap-1 items-center h-6">
-                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
-                            &nbsp;
-                            &nbsp;
-                            </ListItemPrefix>
-                            <div className="w-full bg-blue-gray-50 rounded-md">
-                              &nbsp;
-                              &nbsp;
-                            </div>
-                          </ListItem>
-                          <ListItem className="w-full flex gap-1 items-center h-6">
-                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
-                            &nbsp;
-                            &nbsp;
-                            </ListItemPrefix>
-                            <div className="w-full bg-blue-gray-50 rounded-md">
-                              &nbsp;
-                              &nbsp;
-                            </div>
-                          </ListItem>
-                          <ListItem className="w-full flex gap-1 items-center h-6">
-                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
-                            &nbsp;
-                            &nbsp;
-                            </ListItemPrefix>
-                            <div className="w-full bg-blue-gray-50 rounded-md">
-                              &nbsp;
-                              &nbsp;
-                            </div>
-                          </ListItem>
-                      </div>
-                    ):(
-                      <div className="">Something Went Wrong</div>
-                    )
-                )
-              }
+              {/* list the workspaces linked to a user */}
+              <LoadWorkpaces data={workspaces} isLoading={workspacesLoading} error={workspaceError}/>
 
               <ListItem ripple={false}>               
                 <CreateWorkspaceModal/>
@@ -233,69 +172,9 @@ export function DashboardSidebar() {
           <AccordionBody className="py-1">
             <List className="p-0">
 
-              {
-                //check if the teams are fetched or not
-                (teams?.status=='OK')?(
-                  
-                  //check if the teams list is empty or not
-                  (teams.data.length) ? (teams.data.map((team,index)=>(
-                  <ListItem key={team.id}>
-                      <ListItemPrefix>
-                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                      </ListItemPrefix>
-                      {
-                        team.name
-                      }
-                  </ListItem>
-                ))
+            {/* list teams a user is a member in or teams created by the user */}
+            <LoadTeams data={teams} isLoading={teamsLoading} error={teamsError}/>  
 
-                    ):(
-                      <div className="">No Teams Found</div>
-                    )
-
-
-                ):(
-                  //check if the workspace fetch is loading or not
-                    (workspaces?.status=='LOADING') ? (
-                      <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
-                          <ListItem className="w-full flex gap-1 items-center h-6">
-                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
-                            &nbsp;
-                            &nbsp;
-                            </ListItemPrefix>
-                            <div className="w-full bg-blue-gray-50 rounded-md">
-                              &nbsp;
-                              &nbsp;
-                            </div>
-                          </ListItem>
-                          <ListItem className="w-full flex gap-1 items-center h-6">
-                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
-                            &nbsp;
-                            &nbsp;
-                            </ListItemPrefix>
-                            <div className="w-full bg-blue-gray-50 rounded-md">
-                              &nbsp;
-                              &nbsp;
-                            </div>
-                          </ListItem>
-                          <ListItem className="w-full flex gap-1 items-center h-6">
-                            <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
-                            &nbsp;
-                            &nbsp;
-                            </ListItemPrefix>
-                            <div className="w-full bg-blue-gray-50 rounded-md">
-                              &nbsp;
-                              &nbsp;
-                            </div>
-                          </ListItem>
-                      </div>
-                    ):(
-                      <div className="">Something Went Wrong</div>
-                    )
-                )
-              }
-
-              
               <ListItem>
                 <Button fullWidth variant="text" size="sm" className="flex flex-row gap-2 items-center justify-center">
                 <ListItemPrefix>
@@ -377,4 +256,143 @@ export function DashboardSidebar() {
 // <item.icon strokeWidth={2.5}  className="h-6 w-6"  color="gray"/>
 // </Typography>
 
+}
+
+
+
+function LoadWorkpaces({data,isLoading,error}:any){
+  
+
+  if(isLoading){
+    return (
+      <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
+      <ListItem className="w-full flex gap-1 items-center h-6">
+        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+        &nbsp;
+        &nbsp;
+        </ListItemPrefix>
+        <div className="w-full bg-blue-gray-50 rounded-md">
+          &nbsp;
+          &nbsp;
+        </div>
+      </ListItem>
+      <ListItem className="w-full flex gap-1 items-center h-6">
+        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+        &nbsp;
+        &nbsp;
+        </ListItemPrefix>
+        <div className="w-full bg-blue-gray-50 rounded-md">
+          &nbsp;
+          &nbsp;
+        </div>
+      </ListItem>
+      <ListItem className="w-full flex gap-1 items-center h-6">
+        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+        &nbsp;
+        &nbsp;
+        </ListItemPrefix>
+        <div className="w-full bg-blue-gray-50 rounded-md">
+          &nbsp;
+          &nbsp;
+        </div>
+      </ListItem>
+      </div>
+    )
+  }
+  else if (error){
+    return (
+      <div className="text-xl px-4 font-semibold">Something Went Wrong</div>
+    )
+  }
+  else if(data && !data.length){
+    return (
+      <div className="text-xl px-4 font-semibold">
+        No Workpace to show
+      </div>
+    )
+  }
+  else {
+    return (
+      data &&[...data].map((item:Workspace,index:number)=>(
+        <Link key={item.id} href={`/workspace/${item.title}`}>
+            <ListItem>
+            <ListItemPrefix>
+              <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+            </ListItemPrefix>
+            {
+              item.title
+            }
+            </ListItem>
+        </Link>
+      ))
+    )     
+  }
+}
+function LoadTeams({data,isLoading,error}:any){
+  
+
+  if(isLoading){
+    return (
+      <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
+      <ListItem className="w-full flex gap-1 items-center h-6">
+        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+        &nbsp;
+        &nbsp;
+        </ListItemPrefix>
+        <div className="w-full bg-blue-gray-50 rounded-md">
+          &nbsp;
+          &nbsp;
+        </div>
+      </ListItem>
+      <ListItem className="w-full flex gap-1 items-center h-6">
+        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+        &nbsp;
+        &nbsp;
+        </ListItemPrefix>
+        <div className="w-full bg-blue-gray-50 rounded-md">
+          &nbsp;
+          &nbsp;
+        </div>
+      </ListItem>
+      <ListItem className="w-full flex gap-1 items-center h-6">
+        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+        &nbsp;
+        &nbsp;
+        </ListItemPrefix>
+        <div className="w-full bg-blue-gray-50 rounded-md">
+          &nbsp;
+          &nbsp;
+        </div>
+      </ListItem>
+      </div>
+    )
+  }
+  else if (error){
+    return (
+      <div className="text-xl px-4 font-semibold">Something Went Wrong</div>
+    )
+  }
+  else if(data && !data.length){
+    return (
+      <div className="text-xl px-4 font-semibold">
+        No Teams to show
+      </div>
+    )
+  }
+  else {
+    return (
+      data &&[...data].map((item:Team, index:number)=>(
+        <Link key={item.id} href={`/teams/${item.name}`}>
+          <ListItem>
+              <ListItemPrefix>
+                <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+              </ListItemPrefix>
+              {
+                item.name
+              }
+          </ListItem>
+        </Link>
+      ))
+    )     
+  }
 }
