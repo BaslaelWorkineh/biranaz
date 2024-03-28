@@ -6,6 +6,7 @@ import { ReactFlowProvider } from "reactflow";
 import FlowLayout from "base/layouts/reactflowLayout";
 import AuthSession from "base/layouts/sessionProvider";
 import QueryClientLayout from "base/layouts/QueryClient";
+import { EdgeStoreProvider } from "base/layouts/edgeStore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,9 +28,11 @@ export default function RootLayout({
       <body className={inter.className}>
             <QueryClientLayout>
               <AuthSession>
+                <EdgeStoreProvider>
                   <FlowLayout>
                     {children}
                   </FlowLayout>
+                </EdgeStoreProvider>
               </AuthSession>
             </QueryClientLayout>
           </body>

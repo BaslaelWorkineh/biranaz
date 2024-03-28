@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Dialog,
@@ -14,11 +14,38 @@ import {
   Textarea,
 } from "@material-tailwind/react";
 import { PlusIcon } from "@heroicons/react/24/solid";
+import { useEdgeStore } from "base/layouts/edgeStore";
+import { ImageDropzone } from "../ImageDropZone";
  
 export function CreateWorkspaceModal() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [file,setFile] =  useState<File>()
+  const [fileUrl,setFileUrl] = useState("")
+
+  //edgestore client
+  const {edgestore} = useEdgeStore();
+
   const handleOpen = () => setOpen((cur) => !cur);
- 
+
+  const handleSubmit =async () => {
+    console.log("submit is called")
+    if (file) {
+      const res = await edgestore.publicFiles.upload({
+        file,
+        onProgressChange: (progress) => {
+          // you can use this to show a progress bar
+          console.log(progress);
+        },
+      });
+      // you can run some server action or api here
+      // to add the necessary data to your database
+
+      console.log(res);
+      setFileUrl(res.url)
+    }
+  }
+
+
   return (
     <>
      <Button onClick={handleOpen} fullWidth variant="text" size="sm" className="flex flex-row gap-2 items-center justify-center">
@@ -34,9 +61,18 @@ export function CreateWorkspaceModal() {
         className="bg-transparent shadow-none"
       >
         <Card  className="mx-auto w-full max-h-[95%] text-black">
-          <CardBody className="grid grid-cols-3 gap-4 justify-center items-center">
-            <div className="col-span-1 w-full "></div>
-            <div className="col-span-2 flex flex-col gap-4">
+          <CardBody className="grid grid-cols-12 gap-4 justify-center items-center">
+            <div className="col-span-4 flex justify-center items-center w-full ">
+              <ImageDropzone
+                    
+                      width={300}
+                      height={250}
+                      value={file}
+                      onChange={(file) => {
+                      setFile(file);
+                      }}/>
+            </div>
+            <div className="col-span-8 flex flex-col gap-4">
                 <Typography variant="h4" color="blue-gray">
                   Create New Workspace
                 </Typography>
@@ -58,13 +94,13 @@ export function CreateWorkspaceModal() {
                 <div className="-ml-2.5 -mt-3">
                   <Checkbox className="font-semibold" label="Remember Me" crossOrigin={undefined} />
                 </div>
-                <Button variant="gradient" className="w-full max-w-[60%] place-self-center justify-self-center" onClick={handleOpen} >
+                <Button variant="gradient" className="w-full max-w-[60%] place-self-center justify-self-center" onClick={handleSubmit} >
                     Sign In
                 </Button>
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-
+            image saved to the url:  <a href={fileUrl} className="">{fileUrl}</a>
             <Typography variant="small" className="mt-4 flex justify-center">
               Don&apos;t have an account?
               <Typography
@@ -73,7 +109,7 @@ export function CreateWorkspaceModal() {
                 variant="small"
                 color="blue-gray"
                 className="ml-1 font-bold"
-                onClick={handleOpen}
+                onClick={()=>handleSubmit()}
               >
                 Sign up
               </Typography>

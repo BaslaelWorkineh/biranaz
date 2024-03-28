@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import {
   Card,
   Typography,
@@ -38,7 +38,8 @@ import { getDomain } from "base/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
-
+import Icon from 'base/resources/logo.png'
+import Image from "next/image";
  
 
 export function DashboardSidebar() {
@@ -88,7 +89,7 @@ export function DashboardSidebar() {
 
   const {data:workspaces,isLoading:workspacesLoading,error:workspaceError}= useQuery({
     queryFn:()=>fetch_workspace(),
-    queryKey:["workspace"]
+    queryKey:["workspacees"]
   })
 
   const {data:teams,isLoading:teamsLoading,error:teamsError}= useQuery({
@@ -104,9 +105,9 @@ export function DashboardSidebar() {
 
   return (
     <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-      <div className="mb-2 flex items-center gap-4 p-4">
-        <img src="https://docs.material-tailwind.com/img/logo-ct-dark.png" alt="brand" className="h-8 w-8" />
-        <Typography variant="h5" color="blue-gray">
+      <div className="mb-2 flex items-center gap-0 p-4">
+        <Image src={Icon} alt="brand" className="h-10 w-16 hue-rotate-60" />
+        <Typography className="font-serif" variant="h5" color="blue-gray">
           Branaz
         </Typography>
       </div>
@@ -139,7 +140,9 @@ export function DashboardSidebar() {
           <AccordionBody className="py-1">
             <List className="p-0">
               {/* list the workspaces linked to a user */}
+              <Suspense fallback={<ListItemLoader/>}>
               <LoadWorkpaces data={workspaces} isLoading={workspacesLoading} error={workspaceError}/>
+              </Suspense>
 
               <ListItem ripple={false}>               
                 <CreateWorkspaceModal/>
@@ -331,43 +334,43 @@ function LoadWorkpaces({data,isLoading,error}:any){
 function LoadTeams({data,isLoading,error}:any){
   
 
-  if(isLoading){
-    return (
-      <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
-      <ListItem className="w-full flex gap-1 items-center h-6">
-        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
-        &nbsp;
-        &nbsp;
-        </ListItemPrefix>
-        <div className="w-full bg-blue-gray-50 rounded-md">
-          &nbsp;
-          &nbsp;
-        </div>
-      </ListItem>
-      <ListItem className="w-full flex gap-1 items-center h-6">
-        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
-        &nbsp;
-        &nbsp;
-        </ListItemPrefix>
-        <div className="w-full bg-blue-gray-50 rounded-md">
-          &nbsp;
-          &nbsp;
-        </div>
-      </ListItem>
-      <ListItem className="w-full flex gap-1 items-center h-6">
-        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
-        &nbsp;
-        &nbsp;
-        </ListItemPrefix>
-        <div className="w-full bg-blue-gray-50 rounded-md">
-          &nbsp;
-          &nbsp;
-        </div>
-      </ListItem>
-      </div>
-    )
-  }
-  else if (error){
+  // if(isLoading){
+  //   return (
+  //     <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
+  //     <ListItem className="w-full flex gap-1 items-center h-6">
+  //       <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+  //       &nbsp;
+  //       &nbsp;
+  //       </ListItemPrefix>
+  //       <div className="w-full bg-blue-gray-50 rounded-md">
+  //         &nbsp;
+  //         &nbsp;
+  //       </div>
+  //     </ListItem>
+  //     <ListItem className="w-full flex gap-1 items-center h-6">
+  //       <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+  //       &nbsp;
+  //       &nbsp;
+  //       </ListItemPrefix>
+  //       <div className="w-full bg-blue-gray-50 rounded-md">
+  //         &nbsp;
+  //         &nbsp;
+  //       </div>
+  //     </ListItem>
+  //     <ListItem className="w-full flex gap-1 items-center h-6">
+  //       <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+  //       &nbsp;
+  //       &nbsp;
+  //       </ListItemPrefix>
+  //       <div className="w-full bg-blue-gray-50 rounded-md">
+  //         &nbsp;
+  //         &nbsp;
+  //       </div>
+  //     </ListItem>
+  //     </div>
+  //   )
+  // }
+   if (error){
     return (
       <div className="text-xl px-4 font-semibold">Something Went Wrong</div>
     )
@@ -395,4 +398,42 @@ function LoadTeams({data,isLoading,error}:any){
       ))
     )     
   }
+}
+
+
+function ListItemLoader(){
+  return (
+    <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
+    <ListItem className="w-full flex gap-1 items-center h-6">
+      <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+      &nbsp;
+      &nbsp;
+      </ListItemPrefix>
+      <div className="w-full bg-blue-gray-50 rounded-md">
+        &nbsp;
+        &nbsp;
+      </div>
+    </ListItem>
+    <ListItem className="w-full flex gap-1 items-center h-6">
+      <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+      &nbsp;
+      &nbsp;
+      </ListItemPrefix>
+      <div className="w-full bg-blue-gray-50 rounded-md">
+        &nbsp;
+        &nbsp;
+      </div>
+    </ListItem>
+    <ListItem className="w-full flex gap-1 items-center h-6">
+      <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+      &nbsp;
+      &nbsp;
+      </ListItemPrefix>
+      <div className="w-full bg-blue-gray-50 rounded-md">
+        &nbsp;
+        &nbsp;
+      </div>
+    </ListItem>
+    </div>
+  )
 }
