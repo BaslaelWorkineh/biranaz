@@ -38,8 +38,9 @@ import { getDomain } from "base/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
-import Icon from 'base/resources/logo.png'
+import Icon from 'base/resources/logo.svg'
 import Image from "next/image";
+import {pacific} from 'base/lib/Fonts'
  
 
 export function DashboardSidebar() {
@@ -105,9 +106,9 @@ export function DashboardSidebar() {
 
   return (
     <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-      <div className="mb-2 flex items-center gap-0 p-4">
-        <Image src={Icon} alt="brand" className="h-10 w-16 hue-rotate-60" />
-        <Typography className="font-serif" variant="h5" color="blue-gray">
+      <div className="mb-2 flex items-center gap-2 p-4">
+        <Image src={Icon} alt="brand" className="h-10 w-10 hue-rotate-60" />
+        <Typography style={pacific.style} className="font-serif" variant="h5" color="blue-gray">
           Branaz
         </Typography>
       </div>
@@ -317,7 +318,7 @@ function LoadWorkpaces({data,isLoading,error}:any){
   else {
     return (
       data &&[...data].map((item:Workspace,index:number)=>(
-        <Link key={item.id} href={`/workspace/${item.title}`}>
+        <Link key={item.id} href={`/workspace/${item.id}`}>
             <ListItem>
             <ListItemPrefix>
               <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />

@@ -193,7 +193,7 @@ function Flow() {
       fitView
       attributionPosition="top-right"
       connectionMode={ConnectionMode.Loose}
-      connectionLineStyle={{strokeWidth:'10px',stroke:'green'}}
+      connectionLineStyle={{strokeWidth:'15px',stroke:'black'}}
       minZoom={0.05}
       maxZoom={100}
     >

@@ -157,7 +157,7 @@ const BiDirectionalNode = ({ data }: NodeProps) => {
           Reserve
         </Button>
       </CardFooter>
-      <Handle style={{minWidth:'1.5rem',minHeight:'1.5rem',left:"-3%"}} type="target" position={Position.Left} id="left" />
+      <Handle style={{minWidth:'5%',minHeight:'6%',maxWidth:'12%',maxHeight:'15%',left:"-3%"}} type="target" position={Position.Left} id="left" />
           {`bg-[${data?.rgba}]`}
           <Handle style={{minWidth:'1.5rem',minHeight:'1.5rem',right:"-3%"}} type="source" position={Position.Right} id="right" />
     </Card>

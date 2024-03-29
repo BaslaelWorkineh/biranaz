@@ -45,6 +45,7 @@ export default function BiEdge({
     targetX,
     targetY,
     targetPosition,
+    
   };
 
   let path = '';
@@ -55,5 +56,5 @@ export default function BiEdge({
     [path] = getBezierPath(edgePathParams);
   }
 
-  return <BaseEdge path={path} markerEnd={markerEnd} />;
+  return <BaseEdge style={{strokeWidth:"50"}} path={path} markerEnd={markerEnd} />;
 }
