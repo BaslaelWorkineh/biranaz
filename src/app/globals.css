@@ -22,3 +22,7 @@ path.react-flow__edge-path:hover {
 .hide-scroll-bar::-webkit-scrollbar {
   display: none;
 }
+
+body{
+  background-color: transparent;
+}
