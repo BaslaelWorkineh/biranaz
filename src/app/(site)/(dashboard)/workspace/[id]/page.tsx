@@ -95,7 +95,7 @@ const Page = () => {
             <div className="activity-list grid grid-cols-3 gap-3 justify-evenly w-full">
             {
               [1,2,3,4,5].map((num,index)=>(
-                <ImageCard/>
+                <ImageCard key={index}/>
               ))
             }
             </div>
@@ -141,7 +141,7 @@ const Page = () => {
             <div className="activity-list grid grid-cols-3 gap-3 justify-evenly w-full">
             {
               [1,2,3,4,5].map((num,index)=>(
-                <ImageCard/>
+                <ImageCard key={index}/>
               ))
             }
             </div>
@@ -206,7 +206,7 @@ return (
         <div className="activity-list grid grid-cols-3 gap-3 justify-evenly w-full px-6 py-2">
             {
               [1,2,3,4,5].map((num,index)=>(
-                <ImageCardFallback/>
+                <ImageCardFallback key={index}/>
               ))
             }
         </div>

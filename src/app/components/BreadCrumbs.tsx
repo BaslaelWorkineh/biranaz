@@ -63,7 +63,7 @@ return (
       {
       [1,2,3,4].map((crumb,index)=>(
             
-              <span className="w-14 h-2 animate-pulse rounded-lg bg-[#9d9a9a]"/>
+              <span key={index} className="w-14 h-2 animate-pulse rounded-lg bg-[#9d9a9a]"/>
 
         ))
       }
