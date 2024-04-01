@@ -1,4 +1,4 @@
-import { getAllWorkspaces, getWorkspaceById, getWorkspacesByName, getWorkspacesByTeamId, getWorkspacesByUserId } from "base/lib/backend/dbfunctions";
+import { getAllWorkspaces, getWorkspaceById, getWorkspacesBySlug, getWorkspacesByTeamId, getWorkspacesByUserId } from "base/lib/backend/dbfunctions";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req:NextRequest){
@@ -25,7 +25,7 @@ export async function GET(req:NextRequest){
       result = await getWorkspacesByUserId(userId)
   }
   else if (name){
-    result = await getWorkspacesByName(name)
+    result = await getWorkspacesBySlug(name)
   }
   else{
      result = await getAllWorkspaces()  
