@@ -18,11 +18,21 @@ import { useEdgeStore } from "base/layouts/edgeStore";
 import { ImageDropzone } from "../ImageDropZone";
 import { WorkspaceInputSchema } from "base/types/dbTypes";
 import { getDomain } from "base/lib/utils";
- 
+import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+
+
+
+
+
+
 export function CreateWorkspaceModal() {
+  
   const [open, setOpen] = useState(false);
   const [file,setFile] =  useState<File>()
   const [fileUrl,setFileUrl] = useState("")
+
+  const queryClient  = useQueryClient()
 
   const [workspaceData,setWorkspaceData] = useState<WorkspaceInputSchema>({workspaceCover:"",workspaceDescription:"",workspaceName:""} as WorkspaceInputSchema) 
 
@@ -84,8 +94,20 @@ export function CreateWorkspaceModal() {
       }
       console.log("to be submitted",data)
       console.log("submitting the workspace")
-      postWorkspace(data)
 
+      
+     
+      queryClient.invalidateQueries({queryKey:['workspaces']})
+      toast.promise(
+          postWorkspace(data),//the workspace is posted here
+         {
+           loading: `Creating ${data.workspaceName}...`,
+           success: <b>Horray! Workspace {data.workspaceName} Created</b>,
+           error: <b>Sorry, Something went wrong while creating workspace</b>,
+         }
+       );
+
+       handleOpen()
 
     }
   }
@@ -156,6 +178,7 @@ export function CreateWorkspaceModal() {
                 className="ml-1 font-bold"
                 onClick={()=>handleSubmit()}
               >
+                
                 Sign up
               </Typography>
             </Typography>

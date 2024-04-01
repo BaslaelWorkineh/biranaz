@@ -35,7 +35,7 @@ import {
 import { Team, Workspace } from "@prisma/client";
 import { CreateWorkspaceModal } from "./modals/CreateWorkspaceModal";
 import { getDomain } from "base/lib/utils";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 import Icon from 'base/resources/logo.svg'
@@ -50,6 +50,7 @@ export function DashboardSidebar() {
   const handleOpen = (value: React.SetStateAction<number>) => {
     setOpen(open === value ? 0 : value);
   };
+
 
   const fetch_workspace = async () => {
     try {
@@ -91,7 +92,7 @@ export function DashboardSidebar() {
 
   const {data:workspaces,isLoading:workspacesLoading,error:workspaceError}= useQuery({
     queryFn:()=>fetch_workspace(),
-    queryKey:["workspaces"]
+    queryKey:["workspaces"]    
   })
 
   const {data:teams,isLoading:teamsLoading,error:teamsError}= useQuery({

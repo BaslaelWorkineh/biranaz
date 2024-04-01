@@ -7,6 +7,7 @@ import FlowLayout from "base/layouts/reactflowLayout";
 import AuthSession from "base/layouts/sessionProvider";
 import QueryClientLayout from "base/layouts/QueryClient";
 import { EdgeStoreProvider } from "base/layouts/edgeStore";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,18 +25,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-            <QueryClientLayout>
-              <AuthSession>
-                <EdgeStoreProvider>
-                  <FlowLayout>
-                    {children}
-                  </FlowLayout>
-                </EdgeStoreProvider>
-              </AuthSession>
-            </QueryClientLayout>
-          </body>
-    </html>
+        <html lang="en">
+          <body className={inter.className}>
+                <QueryClientLayout>
+                  <AuthSession>
+                    <EdgeStoreProvider>
+                      <Toaster/>
+                      <FlowLayout>
+                        {children}
+                      </FlowLayout>
+                    </EdgeStoreProvider>
+                  </AuthSession>
+                </QueryClientLayout>
+              </body>
+        </html>
   );
 }
