@@ -1,6 +1,12 @@
+import { WorkspaceInputSchema } from "base/types/dbTypes";
 import { db } from "./db";
+import { auth } from "./auth";
 
-//Wrokspace database functions
+
+
+// +++++++++===== Wrokspace database functions ======+++++++++++++++
+
+        //CREATE
 
 export async function getWorkspaceById(workspaceId:string){
     
@@ -145,6 +151,49 @@ export async function getAllWorkspaces(){
     return {data:response,status:status}
 
 }
+
+
+        //POST
+export async function CreateWorspace(WorkspaceData:WorkspaceInputSchema){
+    const session  =await auth()
+     
+    let response:object = {message :`failed to craete workspace`}
+    let status = 400;
+    
+   try{
+       let result: any
+       
+        if(!session){
+            response = {message:"unAuthorized request .please signin befor you create a workspace"}
+            status:401
+        }
+        else{
+            result  =  await db.workspace.create({
+                data:{
+                    title:WorkspaceData.workspaceName,
+                    description:WorkspaceData.workspaceDescription,
+                    cover:WorkspaceData.workspaceCover,
+                    creatorId:session.user.id 
+                }
+            })
+           if(result){
+                response =result;
+                status= 200
+            }
+        }
+
+        
+    }
+    catch(error){
+        response = {message :`failed to fetch workspaces for the workspace name ${WorkspaceData.workspaceName}`}
+        
+    }
+
+    return {data:response,status:status}
+
+}
+
+
 
 
 // Team database functions

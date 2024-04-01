@@ -1,4 +1,4 @@
-import { getAllWorkspaces, getWorkspaceById, getWorkspacesByName, getWorkspacesByTeamId, getWorkspacesByUserId } from "base/lib/backend/dbfunctions";
+import { CreateWorspace, getAllWorkspaces, getWorkspaceById, getWorkspacesByName, getWorkspacesByTeamId, getWorkspacesByUserId } from "base/lib/backend/dbfunctions";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req:NextRequest){
@@ -35,14 +35,14 @@ export async function GET(req:NextRequest){
   return NextResponse.json(result.data,{status:result.status})
 }
 
-// export async function POST(req:NextRequest){
-//    const postData =await req.json()
+export async function POST(req:NextRequest){
+   const WorkspaceData =await req.json()
    
 
-//    const result = await AddPost((postData as any))
+   const result = await CreateWorspace((WorkspaceData))
 
-//    return NextResponse.json(result)
-// }
+   return NextResponse.json(result)
+}
 
 
 

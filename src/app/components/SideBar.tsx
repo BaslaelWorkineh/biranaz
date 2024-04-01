@@ -67,6 +67,7 @@ export function DashboardSidebar() {
       console.error("Error fetching workspaces:", error);
       // fetch_workspace()
     }
+    return [] as Workspace[]
   };
 
   const fetch_teams =async () => {
@@ -90,7 +91,7 @@ export function DashboardSidebar() {
 
   const {data:workspaces,isLoading:workspacesLoading,error:workspaceError}= useQuery({
     queryFn:()=>fetch_workspace(),
-    queryKey:["workspacees"]
+    queryKey:["workspaces"]
   })
 
   const {data:teams,isLoading:teamsLoading,error:teamsError}= useQuery({

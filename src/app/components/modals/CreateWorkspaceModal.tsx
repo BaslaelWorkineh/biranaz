@@ -16,16 +16,50 @@ import {
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useEdgeStore } from "base/layouts/edgeStore";
 import { ImageDropzone } from "../ImageDropZone";
+import { WorkspaceInputSchema } from "base/types/dbTypes";
+import { getDomain } from "base/lib/utils";
  
 export function CreateWorkspaceModal() {
   const [open, setOpen] = useState(false);
   const [file,setFile] =  useState<File>()
   const [fileUrl,setFileUrl] = useState("")
 
+  const [workspaceData,setWorkspaceData] = useState<WorkspaceInputSchema>({workspaceCover:"",workspaceDescription:"",workspaceName:""} as WorkspaceInputSchema) 
+
+  const handleChange  = (event:any)=>{
+    const {name,value} = event.target;
+
+    setWorkspaceData({...workspaceData,[name]:value})
+  }
+
+
   //edgestore client
   const {edgestore} = useEdgeStore();
 
   const handleOpen = () => setOpen((cur) => !cur);
+
+  const postWorkspace = async(postData:WorkspaceInputSchema)=>{
+    let response ;
+
+    try{
+      const result  =await fetch(`${getDomain()}/api/workspace`,{
+        method:'POST',
+        body:JSON.stringify(postData),
+        headers:{
+          'Content-Type':"application/json"
+        }
+      })
+      if(result.ok){
+        console.log("workspace added successfully",await result.json()) 
+      }
+
+    }
+  catch(error){
+    console.log("oaps some thing went wrong in postWorkspace while posting the workspace",error)
+    throw new Error("error occured while posting a workspace")
+  }
+
+}
 
   const handleSubmit =async () => {
     console.log("submit is called")
@@ -42,6 +76,17 @@ export function CreateWorkspaceModal() {
 
       console.log(res);
       setFileUrl(res.url)
+      const data:WorkspaceInputSchema =  {
+        workspaceCover:res.url,
+        workspaceName:workspaceData.workspaceName,
+        workspaceDescription:workspaceData.workspaceDescription
+
+      }
+      console.log("to be submitted",data)
+      console.log("submitting the workspace")
+      postWorkspace(data)
+
+
     }
   }
 
@@ -86,16 +131,16 @@ export function CreateWorkspaceModal() {
                 <Typography className="-mb-2" variant="h6">
                   Name
                 </Typography>
-                <Input  variant="standard" label="text" size="lg" crossOrigin={undefined} />
+                <Input name="workspaceName" value={workspaceData.workspaceName} onChange={handleChange} variant="standard" label="text" size="lg" crossOrigin={undefined} />
                 <Typography className="-mb-2" variant="h6">
                   Description
                 </Typography>
-                <Textarea className="text-black" variant="standard" label="Standard" />
+                <Textarea name="workspaceDescription" value={workspaceData.workspaceDescription} onChange={handleChange} className="text-black" variant="standard" label="Standard" />
                 <div className="-ml-2.5 -mt-3">
                   <Checkbox className="font-semibold" label="Remember Me" crossOrigin={undefined} />
                 </div>
                 <Button variant="gradient" className="w-full max-w-[60%] place-self-center justify-self-center" onClick={handleSubmit} >
-                    Sign In
+                    Create Workspace
                 </Button>
             </div>
           </CardBody>
@@ -120,3 +165,4 @@ export function CreateWorkspaceModal() {
     </>
   );
 }
+

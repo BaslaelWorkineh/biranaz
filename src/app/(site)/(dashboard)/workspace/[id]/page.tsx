@@ -79,16 +79,16 @@ const Page = () => {
                     Recent Activities
                   </Typography>
                   <Typography color="gray" className="mt-1 font-normal">
-                    See information about all members
+                    See your recent actions
                   </Typography>
                 </div>
                 <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
                   <Button variant="outlined" size="sm">
                     view all
                   </Button>
-                  <Button className="flex items-center gap-3" size="sm">
+                  {/* <Button className="flex items-center gap-3" size="sm">
                     <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-                  </Button>
+                  </Button> */}
                 </div>
             </div>
 
@@ -105,10 +105,10 @@ const Page = () => {
             <div className="mb-8 flex items-center justify-between gap-8">
                 <div>
                   <Typography variant="h5" color="blue-gray">
-                    Flow Diagrams
+                    Knowledge Diagrams
                   </Typography>
                   <Typography color="gray" className="mt-1 font-normal">
-                    See information about all members
+                    Explore through your previous knowledge visualizations
                   </Typography>
                 </div>
                 <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -120,24 +120,7 @@ const Page = () => {
                   </Button>
                 </div>
             </div>
-              {/* header with title and action buttons*/}
-            <div className="mb-8 flex items-center justify-between gap-8 p-6">
-                <div>
-                  <p className="w-[20%] h-3 bg-[#c5c5c5] rounded-[10px] animate-pulse" />
-                  <Typography color="gray" className="mt-1 font-normal">
-                  c5c5c5   See information about all members
-                  </Typography>
-                </div>
-                <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                  <Button variant="outlined" size="sm">
-                    view all
-                  </Button>
-                  <Button className="flex items-center gap-3" size="sm">
-                    <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-                  </Button>
-                </div>
-              </div>
-
+              
             <div className="activity-list grid grid-cols-3 gap-3 justify-evenly w-full">
             {
               [1,2,3,4,5].map((num,index)=>(
