@@ -12,14 +12,15 @@ import {
   Checkbox,
   ListItemPrefix,
   Textarea,
+  Spinner
 } from "@material-tailwind/react";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useEdgeStore } from "base/layouts/edgeStore";
 import { ImageDropzone } from "../ImageDropZone";
 import { WorkspaceInputSchema } from "base/types/dbTypes";
 import { getDomain } from "base/lib/utils";
-import { useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast, { ErrorIcon } from "react-hot-toast";
 
 
 
@@ -47,6 +48,10 @@ export function CreateWorkspaceModal() {
   const {edgestore} = useEdgeStore();
 
   const handleOpen = () => setOpen((cur) => !cur);
+
+  const {mutateAsync:workspaceMutation,isPending:worskpacePending,isError:workspaceError,isSuccess:workspaceSuccess}  = useMutation({
+    mutationFn: async (data:WorkspaceInputSchema) => {postWorkspace(data)},
+    mutationKey:['workspaces']})
 
   const postWorkspace = async(postData:WorkspaceInputSchema)=>{
     let response ;
@@ -99,14 +104,23 @@ export function CreateWorkspaceModal() {
      
       queryClient.invalidateQueries({queryKey:['workspaces']})
       toast.promise(
-          postWorkspace(data),//the workspace is posted here
+          workspaceMutation(data),//the workspace is posted here
          {
            loading: `Creating ${data.workspaceName}...`,
            success: <b>Horray! Workspace {data.workspaceName} Created</b>,
            error: <b>Sorry, Something went wrong while creating workspace</b>,
+           
+         },
+         {
+            style: {
+              minWidth: '250px',
+              zIndex: 9999,
+            },
+            position:'bottom-right'
          }
+        
        );
-
+        
        handleOpen()
 
     }
@@ -162,7 +176,15 @@ export function CreateWorkspaceModal() {
                   <Checkbox className="font-semibold" label="Remember Me" crossOrigin={undefined} />
                 </div>
                 <Button variant="gradient" className="w-full max-w-[60%] place-self-center justify-self-center" onClick={handleSubmit} >
-                    Create Workspace
+                    {worskpacePending && <Spinner scale={20} color="brown" />}
+                    {
+                      !worskpacePending?"creating workspace":"Create Workspace"
+                    }
+                    {
+                      workspaceError && (
+                        <ErrorIcon/>
+                      )
+                    }
                 </Button>
             </div>
           </CardBody>
@@ -178,8 +200,8 @@ export function CreateWorkspaceModal() {
                 className="ml-1 font-bold"
                 onClick={()=>handleSubmit()}
               >
+                    Sign up
                 
-                Sign up
               </Typography>
             </Typography>
           </CardFooter>

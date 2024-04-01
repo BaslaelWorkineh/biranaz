@@ -1,4 +1,4 @@
-import { CreateWorspace, getAllWorkspaces, getWorkspaceById, getWorkspacesByName, getWorkspacesByTeamId, getWorkspacesByUserId } from "base/lib/backend/dbfunctions";
+import { CreateWorspace, getAllWorkspaces, getWorkspaceById, getWorkspacesBySlug, getWorkspacesByTeamId, getWorkspacesByUserId } from "base/lib/backend/dbfunctions";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req:NextRequest){
@@ -7,7 +7,7 @@ export async function GET(req:NextRequest){
   const teamId  = url.searchParams.get('team')
   const workspaceId =  url.searchParams.get('workspace')
   const userId =  url.searchParams.get('user')
-  const name = url.searchParams.get('name')
+  const slug = url.searchParams.get('slug')
 
   console.log("this is the team query params 🎯 ",teamId)
   console.log("this is the workspace param 🎯 ",workspaceId)
@@ -24,8 +24,8 @@ export async function GET(req:NextRequest){
   else if (userId){
       result = await getWorkspacesByUserId(userId)
   }
-  else if (name){
-    result = await getWorkspacesByName(name)
+  else if (slug){
+    result = await getWorkspacesBySlug(slug)
   }
   else{
      result = await getAllWorkspaces()  

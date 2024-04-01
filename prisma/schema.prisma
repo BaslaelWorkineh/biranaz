@@ -68,6 +68,7 @@ model VerificationToken {
 model Workspace {
   id String @id @default(uuid())
   title String @unique
+  slug String @unique
   description String
   creatorId String
   creator User @relation(fields: [creatorId],references: [id],onDelete:Cascade,onUpdate:Cascade)
@@ -76,10 +77,13 @@ model Workspace {
   // BR: a Workspace can only be container maximum under one Team
   teamId String?
   team Team? @relation(fields: [teamId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+  @@index([slug,creatorId])
 }
 model Diagram{
   id String @id @default(uuid())
   title String @unique
+  slug String @unique
   description String
   type DiagramType
   metadata Json
@@ -93,6 +97,7 @@ model Diagram{
   Nodes Node[]
   Edges Edge[]
 
+@@index([slug,workspaceId])
   //references
 }
 

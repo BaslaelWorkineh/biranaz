@@ -1,6 +1,7 @@
 import { WorkspaceInputSchema } from "base/types/dbTypes";
 import { db } from "./db";
 import { auth } from "./auth";
+import { slugify } from "../utils";
 
 
 
@@ -98,15 +99,15 @@ export async function getWorkspacesByUserId(userId:string){
     return {data:response,status:status}
 
 }
-export async function getWorkspacesByName(name:string){
-    let response:object = {message :`failed to fetch workspaces for the workspace name ${name} from the database`}
+export async function getWorkspacesBySlug(slug:string){
+    let response:object = {message :`failed to fetch workspaces for the workspace name ${slug} from the database`}
     let status = 400;
     try{
         let result: any
         
         result =  await db.workspace.findMany({
              where:{
-                 title:name
+                 slug:slug
              }
              
          })
@@ -119,7 +120,7 @@ export async function getWorkspacesByName(name:string){
          
      }
      catch(error){
-         response = {message :`failed to fetch workspaces for the workspace name ${name} from the database`}
+         response = {message :`failed to fetch workspaces for the workspace name ${slug} from the database`}
          
      }
  
@@ -171,6 +172,7 @@ export async function CreateWorspace(WorkspaceData:WorkspaceInputSchema){
             result  =  await db.workspace.create({
                 data:{
                     title:WorkspaceData.workspaceName,
+                    slug:slugify(WorkspaceData.workspaceName),
                     description:WorkspaceData.workspaceDescription,
                     cover:WorkspaceData.workspaceCover,
                     creatorId:session.user.id 

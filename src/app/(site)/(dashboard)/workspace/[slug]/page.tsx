@@ -13,28 +13,26 @@ import { useParams } from 'next/navigation'
 import { Suspense } from 'react'
 
 const Page = () => {
-  const {id}:{id:string} = useParams();
+  const {slug}:{slug:string} = useParams();
   const {data:workspace,isLoading:workspaceLoading,error:workspaceError}= useQuery({
     queryFn:()=>fetch_workspace(),
-    queryKey:['workspace',id]
+    queryKey:['workspace',slug]
   })
 
   const fetch_workspace =async () => {
     try {
-      const response = await fetch(`${getDomain()}/api/workspace?workspace=${id}`);
+      const response = await fetch(`${getDomain()}/api/workspace?slug=${slug}`);
       if (!response.ok) {
         // setTeams({...teams,status:'FAIL'} as TeamsFetchType)
         throw new Error("Network response was not ok");
       }
-      const data:Workspace = await response.json(); // Assuming response contains JSON data
-      // setTeams(data);
-      // setTeams({data,status:'OK'} as TeamsFetchType)
-      return data
+      const [data] = await response.json();
+      return data as Workspace;
     } catch (error) { 
       console.error("Error fetching workspaces:", error);
       // fetch_teams()
     }
-
+    return {} as Workspace
   };
 
   if(workspaceLoading){

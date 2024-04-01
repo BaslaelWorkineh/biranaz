@@ -320,7 +320,7 @@ function LoadWorkpaces({data,isLoading,error}:any){
   else {
     return (
       data &&[...data].map((item:Workspace,index:number)=>(
-        <Link key={item.id} href={`/workspace/${item.id}`}>
+        <Link key={item.id} href={`/workspace/${item.slug}`}>
             <ListItem>
             <ListItemPrefix>
               <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
