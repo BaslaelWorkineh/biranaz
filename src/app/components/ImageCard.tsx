@@ -13,7 +13,7 @@ import {
                   <div className="bg-cover bg-center h-16 p-4 flex justify-end items-center bg-[url(https://content.api.news/v3/images/bin/11990db1d540d5c13ea8ca3e01f2083c)]">
                       <p className="uppercase tracking-widest text-sm text-white bg-black py-1 px-2 rounded opacity-75 shadow-lg">DFW <span className="tracking-normal"></span> SEA</p>
                   </div>
-        <div className="px-4 pb-3 pt-4 border-b border-gray-300 bg-gray-100 flex justify-between">
+        <div className="px-4 pb-3 pt-4 border-b border-gray-300 bg-brown-100 flex justify-between">
                       <div className="text-xs uppercase font-bold text-gray-600 tracking-wide">TSA: <span className="font-normal">5-12 min</span></div>
           <div className="text-xs uppercase font-bold text-gray-600 tracking-wide">Airport Status: <span className="font-normal text-green-600">Normal</span></div>
                   </div>
@@ -25,7 +25,7 @@ import {
             
             
           </div>
-          <div className="leading-loose bg-green-500 text-white p-1 px-2 rounded-[10px] uppercase text-xs tracking-wider">On Time</div>
+          <div className="leading-loose bg-brown-500 text-white p-1 px-2 rounded-[10px] uppercase text-xs tracking-wider">On Time</div>
                   </div>
                   <div className="flex justify-between items-center p-4 border-t border-gray-300 text-gray-600">
                       <div className="flex items-center">

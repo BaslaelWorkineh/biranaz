@@ -221,7 +221,7 @@ export function DashboardSidebar() {
           Log Out
         </ListItem>
       </List>
-      <Alert open={openAlert} className="mt-auto" onClose={() => setOpenAlert(false)}>
+      <Alert open={openAlert} className="ad-banner mt-auto" onClose={() => setOpenAlert(false)}>
         <CubeTransparentIcon className="mb-4 h-12 w-12" />
         <Typography variant="h6" className="mb-1">
           Upgrade to PRO
@@ -259,7 +259,7 @@ export function DashboardSidebar() {
 //   variant="small"
 //   color="red"
 //   onDragStart={(event)=>onDragStart(event,'IdeaNode')} className='bg-stone-800 rounded-[8px] text-stone-200 text-lg font-semibold px-2 py-2 cursor-auto ' draggable>
-// <item.icon strokeWidth={2.5}  className="h-6 w-6"  color="gray"/>
+// <item.icon strokeWidth={2.5}  className="h-6 w-6"  color="blue"/>
 // </Typography>
 
 }
@@ -273,31 +273,31 @@ function LoadWorkpaces({data,isLoading,error}:any){
     return (
       <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
       <ListItem className="w-full flex gap-1 items-center h-6">
-        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+        <ListItemPrefix className="h-6 w-8 rounded-md bg-gray-200">
         &nbsp;
         &nbsp;
         </ListItemPrefix>
-        <div className="w-full bg-blue-gray-50 rounded-md">
+        <div className="w-full bg-gray-200 rounded-md">
           &nbsp;
           &nbsp;
         </div>
       </ListItem>
       <ListItem className="w-full flex gap-1 items-center h-6">
-        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+        <ListItemPrefix className="h-6 w-8 rounded-md bg-gray-200">
         &nbsp;
         &nbsp;
         </ListItemPrefix>
-        <div className="w-full bg-blue-gray-50 rounded-md">
+        <div className="w-full bg-gray-200 rounded-md">
           &nbsp;
           &nbsp;
         </div>
       </ListItem>
       <ListItem className="w-full flex gap-1 items-center h-6">
-        <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+        <ListItemPrefix className="h-6 w-8 rounded-md bg-gray-200">
         &nbsp;
         &nbsp;
         </ListItemPrefix>
-        <div className="w-full bg-blue-gray-50 rounded-md">
+        <div className="w-full bg-gray-200 rounded-md">
           &nbsp;
           &nbsp;
         </div>
@@ -341,31 +341,31 @@ function LoadTeams({data,isLoading,error}:any){
   //   return (
   //     <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
   //     <ListItem className="w-full flex gap-1 items-center h-6">
-  //       <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+  //       <ListItemPrefix className="h-6 w-8 rounded-md bg-gray-200">
   //       &nbsp;
   //       &nbsp;
   //       </ListItemPrefix>
-  //       <div className="w-full bg-blue-gray-50 rounded-md">
+  //       <div className="w-full bg-gray-200 rounded-md">
   //         &nbsp;
   //         &nbsp;
   //       </div>
   //     </ListItem>
   //     <ListItem className="w-full flex gap-1 items-center h-6">
-  //       <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+  //       <ListItemPrefix className="h-6 w-8 rounded-md bg-gray-200">
   //       &nbsp;
   //       &nbsp;
   //       </ListItemPrefix>
-  //       <div className="w-full bg-blue-gray-50 rounded-md">
+  //       <div className="w-full bg-gray-200 rounded-md">
   //         &nbsp;
   //         &nbsp;
   //       </div>
   //     </ListItem>
   //     <ListItem className="w-full flex gap-1 items-center h-6">
-  //       <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+  //       <ListItemPrefix className="h-6 w-8 rounded-md bg-gray-200">
   //       &nbsp;
   //       &nbsp;
   //       </ListItemPrefix>
-  //       <div className="w-full bg-blue-gray-50 rounded-md">
+  //       <div className="w-full bg-gray-200 rounded-md">
   //         &nbsp;
   //         &nbsp;
   //       </div>
@@ -408,31 +408,31 @@ function ListItemLoader(){
   return (
     <div className="flex flex-col gap-2 max-w-full animate-pulse px-3">
     <ListItem className="w-full flex gap-1 items-center h-6">
-      <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+      <ListItemPrefix className="h-6 w-8 rounded-md bg-gray-300">
       &nbsp;
       &nbsp;
       </ListItemPrefix>
-      <div className="w-full bg-blue-gray-50 rounded-md">
+      <div className="w-full bg-gray-300 rounded-md">
         &nbsp;
         &nbsp;
       </div>
     </ListItem>
     <ListItem className="w-full flex gap-1 items-center h-6">
-      <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+      <ListItemPrefix className="h-6 w-8 rounded-md bg-gray-300">
       &nbsp;
       &nbsp;
       </ListItemPrefix>
-      <div className="w-full bg-blue-gray-50 rounded-md">
+      <div className="w-full bg-gray-300 rounded-md">
         &nbsp;
         &nbsp;
       </div>
     </ListItem>
     <ListItem className="w-full flex gap-1 items-center h-6">
-      <ListItemPrefix className="h-6 w-8 rounded-md bg-blue-gray-50">
+      <ListItemPrefix className="h-6 w-8 rounded-md bg-gray-300">
       &nbsp;
       &nbsp;
       </ListItemPrefix>
-      <div className="w-full bg-blue-gray-50 rounded-md">
+      <div className="w-full bg-gray-300 rounded-md">
         &nbsp;
         &nbsp;
       </div>

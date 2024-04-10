@@ -97,7 +97,7 @@ import {
               <Typography variant="h5" color="blue-gray">
                 Members list
               </Typography>
-              <Typography color="gray" className="mt-1 font-normal">
+              <Typography color="blue" className="mt-1 font-normal">
                 See information about all members
               </Typography>
             </div>
@@ -135,7 +135,7 @@ import {
                 {TABLE_HEAD.map((head, index) => (
                   <th
                     key={head}
-                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
+                    className="cursor-pointer border-y border-blue-gray-100 bg-gray-50/50 p-4 transition-colors hover:bg-gray-50"
                   >
                     <Typography
                       variant="small"

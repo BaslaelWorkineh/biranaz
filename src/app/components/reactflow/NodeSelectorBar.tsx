@@ -91,12 +91,12 @@ export function NodeSelectorBar() {
       {
         NodeSelectorItems.map((item,index)=>(
          
-          <div className="hover:bg-lime-100 cursor-move transition-all duration-500 " key={index}>
+          <div className="hover:bg-brown-100 cursor-move transition-all duration-500 " key={index}>
               <Tooltip
               
                 content={
                   <div className="w-80">
-                    <Typography color="white" className="font-medium">
+                    <Typography color="yellow" className="font-medium">
                       {item.name}
                     </Typography>
                     <Typography
@@ -118,7 +118,7 @@ export function NodeSelectorBar() {
                     color="red"
                     onDragStart={(event)=>onDragStart(event,'IdeaNode')} className='flex flex-col justify-center items-center gap-2 bg-stone-800 rounded-[8px] text-stone-200 font-semibold px-2 py-2 cursor-auto ' draggable>
                   <item.icon strokeWidth={2.5} className="h-6 w-6"  color="gray"/>
-                  <small className="text-[8px] text-blue-gray-800">{item.label}</small>
+                  <small className="text-[8px] text-gray-800">{item.label}</small>
                   </Typography>
 
               
@@ -134,7 +134,7 @@ export function NodeSelectorBar() {
  
   return (
     <Navbar className="mx-auto min-w-full max-w-screen-xl px-4 py-2 lg:px-8 lg:py-4">
-      <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
+      <div className="container mx-auto flex items-center justify-between text-gray-900">
         
         <div className="hidden lg:block">{navList}</div>
         <div className="px-6">

@@ -21,7 +21,7 @@ import { cn } from "base/lib/utils";
           </Typography>
         </CardBody>
         <CardFooter className="pt-0">
-          <Button>Read More</Button>
+          <Button color="brown">Read More</Button>
         </CardFooter>
       </Card>
     );

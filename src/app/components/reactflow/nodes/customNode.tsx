@@ -6,7 +6,7 @@ const CustomNode:FC<NodeProps> = ({data}) => {
     
   return (
     <div className='flex flex-col gap-6 justify-center items-center min-w-[30rem] min-h-[10rem] bg-stone-900 text-stone-300 font-bold text-2xl px-14 py-10 rounded-[15px]'>
-        {/* <CustomHandle className='w-[3rem] h-[3rem] bg-green-600' type={['source','target'][0] as HandleType} position={Position.Left}></CustomHandle> */}
+        {/* <CustomHandle className='w-[3rem] h-[3rem] bg-brown-600' type={['source','target'][0] as HandleType} position={Position.Left}></CustomHandle> */}
         <h1 className="">
             {data.title}
         </h1>
@@ -47,7 +47,7 @@ const CustomHandle = ({ position, source }:any) => (
               type="target"
               position={"left" as any}
               id={`handle-${index}`}
-              className={`w-[3rem] h-[3rem] -left-[2.5rem] text-green-500 bg-green-600`}
+              className={`w-[3rem] h-[3rem] -left-[2.5rem] text-green-500 bg-brown-600`}
               style={{ top:((index+1)*10)+"%", borderRadius:'50%' ,minHeight:'1rem',minWidth:'1rem',marginTop:'2rem',marginBottom:'2rem'}}
             />
   

@@ -22,7 +22,7 @@ const style = {
 
 const BiDirectionalNode = ({ data }: NodeProps) => {
   return (    
-    <Card onClick={()=>alert(`the node ${data.name }-${data.label} is clicked.`)} className={`relative flex flex-col gap-6 justify-center items-center min-w-fit min-h-fit max-h-[40rem] ${data.label>5? 'bg-[#e0c17f]':'bg-[rgb(242,243,216)]'}  text-blue-gray-900 font-bold text-lg p-24 rounded-[15px] shadow-lg shadow-[rgba(30,30,30,1)] border-2 border-lime-600`}>
+    <Card onClick={()=>alert(`the node ${data.name }-${data.label} is clicked.`)} className={`relative flex flex-col gap-6 justify-center items-center min-w-fit min-h-fit max-h-[40rem] ${data.label>5? 'bg-[#e0c17f]':'bg-[rgb(242,243,216)]'}  text-gray-900 font-bold text-lg p-24 rounded-[15px] shadow-lg shadow-[rgba(30,30,30,1)] border-2 border-brown-600`}>
       <NodeResizeControl minHeight={250} minWidth={400}>
               <div className="rounded-full p-2 bg-stone-800 text-sm font-semibold h-2 w-2 "></div>
             </NodeResizeControl>
@@ -66,7 +66,7 @@ const BiDirectionalNode = ({ data }: NodeProps) => {
         </Typography>
         <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
           <Tooltip content="$129 per night">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -84,7 +84,7 @@ const BiDirectionalNode = ({ data }: NodeProps) => {
             </span>
           </Tooltip>
           <Tooltip content="Free wifi">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -100,7 +100,7 @@ const BiDirectionalNode = ({ data }: NodeProps) => {
             </span>
           </Tooltip>
           <Tooltip content="2 bedrooms">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -113,7 +113,7 @@ const BiDirectionalNode = ({ data }: NodeProps) => {
             </span>
           </Tooltip>
           <Tooltip content={`65" HDTV`}>
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -130,7 +130,7 @@ const BiDirectionalNode = ({ data }: NodeProps) => {
             </span>
           </Tooltip>
           <Tooltip content="Fire alert">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -146,7 +146,7 @@ const BiDirectionalNode = ({ data }: NodeProps) => {
             </span>
           </Tooltip>
           <Tooltip content="And +20 more">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
               +20
             </span>
           </Tooltip>

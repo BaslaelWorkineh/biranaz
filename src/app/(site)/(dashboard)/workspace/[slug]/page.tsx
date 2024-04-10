@@ -76,7 +76,7 @@ const Page = () => {
                   <Typography variant="h5" color="blue-gray">
                     Recent Activities
                   </Typography>
-                  <Typography color="gray" className="mt-1 font-normal">
+                  <Typography color="blue" className="mt-1 font-normal">
                     See your recent actions
                   </Typography>
                 </div>
@@ -105,7 +105,7 @@ const Page = () => {
                   <Typography variant="h5" color="blue-gray">
                     Knowledge Diagrams
                   </Typography>
-                  <Typography color="gray" className="mt-1 font-normal">
+                  <Typography color="blue" className="mt-1 font-normal">
                     Explore through your previous knowledge visualizations
                   </Typography>
                 </div>

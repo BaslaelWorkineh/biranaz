@@ -11,8 +11,8 @@ const variants = {
     'border-0 p-0 min-h-0 min-w-0 relative shadow-md bg-slate-200 dark:bg-slate-900 rounded-md',
   active: 'border-2',
   disabled:
-    'bg-gray-200 border-gray-300 cursor-default pointer-events-none bg-opacity-30 dark:bg-gray-700',
-  accept: 'border border-blue-500 bg-blue-500 bg-opacity-10',
+    'bg-brown-200 border-gray-300 cursor-default pointer-events-none bg-opacity-30 dark:bg-brown-700',
+  accept: 'border border-blue-500 bg-brown-500 bg-opacity-10',
   reject: 'border border-red-700 bg-red-700 bg-opacity-10',
 };
 
@@ -189,7 +189,7 @@ const Button = React.forwardRef<
         // base
         'focus-visible:ring-ring inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50',
         // color
-        'border border-gray-400 text-gray-400 shadow hover:bg-gray-100 hover:text-gray-500 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-700',
+        'border border-gray-400 text-gray-400 shadow hover:bg-brown-100 hover:text-gray-500 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-brown-700',
         // size
         'h-6 rounded-md px-2 text-xs',
         className,

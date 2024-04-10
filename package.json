@@ -49,5 +49,9 @@
   },
   "browser": {
     "crypto": false
+  },
+  "prisma": {
+    "seed": "ts-node ./prisma/seed.ts"
   }
+
 }

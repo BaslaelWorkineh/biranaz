@@ -26,3 +26,25 @@ path.react-flow__edge-path:hover {
 body{
   background-color: transparent;
 }
+
+button {
+  @apply bg-brown-600
+}
+
+.ad-banner{
+  
+  background:
+      repeating-linear-gradient( 45deg,#0000 calc(-650%/13) calc(50%/13),rgba(102, 49, 0, 0.25) 0 calc(100%/13),
+      #0000 0 calc(150%/13),rgba(102, 49, 0, 0.25) 0 calc(200%/13),
+      #0000 0 calc(250%/13),rgba(102, 49, 0, 0.25) 0 calc(300%/13)),repeating-linear-gradient( 45deg,#0000 calc(-650%/13) calc(50%/13),rgba(102, 49, 0, 0.25) 0 calc(100%/13),
+      #0000 0 calc(150%/13),rgba(102, 49, 0, 0.25) 0 calc(200%/13),
+      #0000 0 calc(250%/13),rgba(102, 49, 0, 0.25) 0 calc(300%/13)) 32px 32px,
+      repeating-linear-gradient(-45deg,#0000 calc(-650%/13) calc(50%/13),rgba(102, 49, 0, 0.25) 0 calc(100%/13),
+      #0000 0 calc(150%/13),rgba(102, 49, 0, 0.25) 0 calc(200%/13),
+      #0000 0 calc(250%/13),rgba(102, 49, 0, 0.25) 0 calc(300%/13)),repeating-linear-gradient(-45deg,#0000 calc(-650%/13) calc(50%/13),rgba(102, 49, 0, 0.25) 0 calc(100%/13),
+      #0000 0 calc(150%/13),rgba(102, 49, 0, 0.25) 0 calc(200%/13),
+      #0000 0 calc(250%/13),rgba(102, 49, 0, 0.25) 0 calc(300%/13)) 32px 32px #460202;
+background-size: 64px 64px;
+@apply brightness-50
+
+}
