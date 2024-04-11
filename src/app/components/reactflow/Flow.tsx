@@ -209,7 +209,7 @@ function Flow() {
       <Panel position='top-left' >
         <NodeSelectorBar/>
       </Panel>
-      <Background className='bg-[#dff1ec] ' color={'#3097ff'} variant={BackgroundVariant.Lines} lineWidth={0.09}/>
+      <Background className='bg-[#5e301d2c] ' color={'#3097ff'} variant={BackgroundVariant.Lines} lineWidth={0.09}/>
         <Controls/>
       </ReactFlow>
     </div>

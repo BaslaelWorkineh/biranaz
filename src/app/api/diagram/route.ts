@@ -1,59 +1,69 @@
-import { getAllWorkspaces, getWorkspaceById, getWorkspacesBySlug, getWorkspacesByTeamId, getWorkspacesByUserId } from "base/lib/backend/dbfunctions";
+import { CreateDiagram, CreateWorspace, getAllDiagrams, getDiagramById, getDiagramsBySlug, getDiagramsByUserId,getDiagramsByWorkspaceId,getDiagramsByWorkspaceSlug } from "base/lib/backend/dbfunctions";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req:NextRequest){
 
     const url  = new URL(req.url)
   const teamId  = url.searchParams.get('team')
-  const workspaceId =  url.searchParams.get('workspace')
+  const diagramId =  url.searchParams.get('Diagram')
   const userId =  url.searchParams.get('user')
   const name = url.searchParams.get('name')
+  const workspaceId = url.searchParams.get('workspace')
+  const workspaceSlug = url.searchParams.get('workspaceSlug')
+  const slug = url.searchParams.get('slug')
 
   console.log("this is the team query params 🎯 ",teamId)
-  console.log("this is the workspace param 🎯 ",workspaceId)
+  console.log("this is the Diagram param 🎯 ",diagramId)
   console.log("this is the user param 🎯 ",userId)
 
   let result:{data:any,status:any}
+  if(slug){
+    result = await getDiagramsBySlug(slug)
+  }
 
-  if(workspaceId){
-     result = await getWorkspaceById(workspaceId)  
+  else if(workspaceSlug){
+    result  =  await getDiagramsByWorkspaceSlug(workspaceSlug)
   }
-  else if(teamId){
-      result = await getWorkspacesByTeamId(teamId)
+  else if(workspaceId){
+    result = await getDiagramsByWorkspaceId(workspaceId)
   }
+  else if(diagramId){
+     result = await getDiagramById(diagramId)  
+  }
+
   else if (userId){
-      result = await getWorkspacesByUserId(userId)
+      result = await getDiagramsByUserId(userId)
   }
   else if (name){
-    result = await getWorkspacesBySlug(name)
+    result = await getDiagramsBySlug(name)
   }
   else{
-     result = await getAllWorkspaces()  
+     result = await getAllDiagrams()  
   }
 
 
   return NextResponse.json(result.data,{status:result.status})
 }
 
-// export async function POST(req:NextRequest){
-//    const postData =await req.json()
-   
-
-//    const result = await AddPost((postData as any))  some changes
-
-//    return NextResponse.json(result)
-// }
 
 
+export async function POST(req:NextRequest){
+  const diagramData =await req.json()
+  
 
-// export async function DELETE(req:NextRequest){
-//     return NextResponse.json({message:"this is a DELETE message from the workspace api"},{status:201})
-// }
+  const result = await CreateDiagram(diagramData)
 
-// export async function PUT(req:NextRequest){
-//     return NextResponse.json({message:"this is a PUT message from the workspace api"},{status:201})
-// }
+  return NextResponse.json(result)
+}
 
-// export async function PATCH(req:NextRequest){
-//     return NextResponse.json({message:"this is a PATCH message from the workspace api"},{status:201})
-// }
+export async function DELETE(req:NextRequest){
+    return NextResponse.json({message:"this is a DELETE message from the Diagram api"},{status:201})
+}
+
+export async function PUT(req:NextRequest){
+    return NextResponse.json({message:"this is a PUT message from the Diagram api"},{status:201})
+}
+
+export async function PATCH(req:NextRequest){
+    return NextResponse.json({message:"this is a PATCH message from the Diagram api"},{status:201})
+}

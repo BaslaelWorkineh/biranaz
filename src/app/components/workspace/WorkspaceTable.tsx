@@ -21,6 +21,7 @@ import {
     IconButton,
     Tooltip,
   } from "@material-tailwind/react";
+import { CreateDiagramModal } from "../modals/createDiagramModal";
    
   const TABS = [
     {
@@ -97,7 +98,7 @@ import {
               <Typography variant="h5" color="blue-gray">
                 Members list
               </Typography>
-              <Typography color="blue" className="mt-1 font-normal">
+              <Typography color="gray" className="mt-1 font-normal">
                 See information about all members
               </Typography>
             </div>
@@ -105,9 +106,7 @@ import {
               <Button variant="outlined" size="sm">
                 view all
               </Button>
-              <Button className="flex items-center gap-3" size="sm">
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-              </Button>
+              {/* <CreateDiagramModal/> */}
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">

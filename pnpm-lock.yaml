@@ -38,6 +38,9 @@ dependencies:
   formik:
     specifier: ^2.4.5
     version: 2.4.5(react@18.2.0)
+  matrix_me:
+    specifier: ^1.0.1
+    version: 1.0.1
   next:
     specifier: 14.1.3
     version: 14.1.3(react-dom@18.2.0)(react@18.2.0)
@@ -3937,6 +3940,10 @@ packages:
 
   /material-ripple-effects@2.0.1:
     resolution: {integrity: sha512-hHlUkZAuXbP94lu02VgrPidbZ3hBtgXBtjlwR8APNqOIgDZMV8MCIcsclL8FmGJQHvnORyvoQgC965vPsiyXLQ==}
+    dev: false
+
+  /matrix_me@1.0.1:
+    resolution: {integrity: sha512-woOpIu0X7DqPEtlcn01tXWvBmQ/CkwFEzXr1m4lQtTwqtuDMGI9oPydGFdlWrbWGPsrqZIbfRb9n9sD+KO9uag==}
     dev: false
 
   /merge2@1.4.1:

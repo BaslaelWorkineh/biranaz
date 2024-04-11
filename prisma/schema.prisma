@@ -50,7 +50,8 @@ model User {
 
   //non-auth relations
   workspaces Workspace[]
-  teams Team[]
+  diagrams Diagram[]
+  teams Team[] 
   invitations_sent Invitation[] @relation("Invite_sender")
   inivations_recieved Invitation[] @relation("Invite_reciever")
 }
@@ -87,6 +88,9 @@ model Diagram{
   description String
   type DiagramType
   metadata Json
+  creatorId String 
+  coverImage String
+  creator User @relation(fields: [creatorId],references: [id],onDelete: Cascade,onUpdate: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

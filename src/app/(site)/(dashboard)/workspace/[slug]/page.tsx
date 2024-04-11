@@ -1,11 +1,12 @@
 'use client'
 import { UserPlusIcon } from '@heroicons/react/24/solid'
 import { Button, Typography } from '@material-tailwind/react'
-import { Workspace } from '@prisma/client'
+import { Diagram, Workspace } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'
 import AvatarStack from 'base/app/components/AvatarStack'
 import { Breadcrumb, BreadcrumbFallback } from 'base/app/components/BreadCrumbs'
 import { ImageCard, ImageCardFallback } from 'base/app/components/ImageCard'
+import { CreateDiagramModal } from 'base/app/components/modals/createDiagramModal'
 import { WorkspaceTable } from 'base/app/components/workspace/WorkspaceTable'
 import { getDomain } from 'base/lib/utils'
 import Image from 'next/image'
@@ -19,13 +20,28 @@ const Page = () => {
     queryKey:['workspace',slug]
   })
 
+  const {data:diagrams,isLoading:diagramsLoading,error:diagramsError}  = useQuery({
+    queryFn:()=>fetch_workspace_diagrams(),
+    queryKey:['diagrams','workspaceDiagrams',slug]
+  })
+
+  const fetch_workspace_diagrams =async () => {
+    try {
+      const response:Response = await fetch(`${getDomain()}/api/diagram?workspaceSlug=${slug}`);
+      
+      const data = await response.json();
+      return data as Diagram[]
+    } catch (error) { 
+      console.error("Error fetching diagrams:", error);
+      // fetch_teams()
+    }
+    return [] as Diagram[]
+  };
+
   const fetch_workspace =async () => {
     try {
       const response = await fetch(`${getDomain()}/api/workspace?slug=${slug}`);
-      if (!response.ok) {
-        // setTeams({...teams,status:'FAIL'} as TeamsFetchType)
-        throw new Error("Network response was not ok");
-      }
+      
       const [data] = await response.json();
       return data as Workspace;
     } catch (error) { 
@@ -91,11 +107,18 @@ const Page = () => {
             </div>
 
             <div className="activity-list grid grid-cols-3 gap-3 justify-evenly w-full">
-            {
-              [1,2,3,4,5].map((num,index)=>(
-                <ImageCard key={index}/>
+             {
+              diagrams && diagrams?.map((diagram:Diagram,index)=>(
+                <ImageCard diagram={diagram} key={index}/>
               ))
-            }
+            } 
+            
+            <pre>
+              diagrams
+              {
+                diagrams?.length
+              }
+            </pre>
             </div>
 
         </section>
@@ -113,9 +136,7 @@ const Page = () => {
                   <Button variant="outlined" size="sm">
                     view all
                   </Button>
-                  <Button className="flex items-center gap-3" size="sm">
-                    <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-                  </Button>
+                  <CreateDiagramModal workspaceId={workspace?.id as string} />
                 </div>
             </div>
               
