@@ -43,7 +43,7 @@ export default function NodeDrawer() {
   return (
     <React.Fragment>
      <Drawer  size={400} overlay={false} placement='right' open={nodeModalValues?.isOpen as boolean} onClose={closeDrawer} className='w-full border-l-2 border-l-brown-100 overflow-auto'>
-        <div className="flex items-center justify-between px-4 pb-2 w-[60rem] bg-brown-200">
+        <div className="flex items-center justify-between px-4 pb-2 w-full bg-brown-200">
           <Typography variant="h5" color="blue-gray">
             {nodeModalValues?.node?.data.label}
           </Typography>
@@ -67,9 +67,6 @@ export default function NodeDrawer() {
         <div className="mb-5 px-4">
           <Typography variant="small" color="gray" className="font-normal ">
             Write the message and then click button.
-            {
-              JSON.stringify(currentNode)
-            }
           </Typography>
         </div>
         <form className="flex flex-col gap-6 p-4 ">
@@ -81,6 +78,14 @@ export default function NodeDrawer() {
           <Textarea rows={6} label="Message" />
           <Button>Send Message</Button>
         </form>
+        <div className="mb-5 px-4">
+          <Typography variant="small" color="gray" className="font-normal ">
+            Write the message and then click button.
+            {
+              JSON.stringify(currentNode)
+            }
+          </Typography>
+        </div>
       </Drawer>
     </React.Fragment>
   );

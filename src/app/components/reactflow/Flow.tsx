@@ -1,16 +1,8 @@
-import { DragEvent, useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import ReactFlow, {
   Controls,
   Background,
-  useEdgesState,
-  useNodesState,
-  applyNodeChanges,
-  NodeChange,
   BackgroundVariant,
-  addEdge,
-  Edge,
-  Connection,
-  MarkerType,
   ConnectionMode,
   Position,
   Panel,
@@ -25,15 +17,18 @@ import IdeaNode from "./nodes/IdeaNode";
 import BiEdge from "./edges/BiEdge";
 import EdgeWithButton from "./edges/EdgeWithButton";
 import { FaNetworkWired, FaRegPlusSquare, FaSave } from "react-icons/fa";
-import { NodeDrawer } from "./nodeDrawer";
-import { Breadcrumb } from "../BreadCrumbs";
+
 import { NodeSelectorBar } from "base/app/components/reactflow/NodeSelectorBar";
 import { Input } from "@material-tailwind/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import useStore from 'base/contexts/store'
-import { useShallow } from 'zustand/react/shallow';
-import {RFState, selector} from 'base/contexts/store'
-import { randomUUID } from "crypto";
+import useStore from "base/contexts/store";
+import { useShallow } from "zustand/react/shallow";
+import { selector } from "base/contexts/store";
+import { useQuery } from "@tanstack/react-query";
+import { getDomain } from "base/lib/utils";
+import { DiagramWithWorkspaceWithCreator } from "base/types/dbTypes";
+import { useParams } from "next/navigation";
+import { DiagramBreadCrumb } from "../DiagramBreadCrumb";
 
 const nodeTypes = {
   CustomNode: CustomNode,
@@ -72,8 +67,46 @@ const edgeTypes = {
 // ];
 
 function Flow() {
-  
-  const { nodes, edges, addEdge,addNode,onNodesChange, onEdgesChange, onConnect } = useStore(useShallow(selector));
+  //loading the diagram starts here
+  const { slug }: { slug: string } = useParams();
+
+  const {
+    data: diagram,
+    isLoading: diagramLoading,
+    error: diagramError,
+  } = useQuery({
+    queryFn: () => fetch_workspace_diagram(),
+    queryKey: ["diagram", "workspaceDiagram", slug],
+  });
+
+  const fetch_workspace_diagram = async () => {
+    try {
+      const response: Response = await fetch(
+        `${getDomain()}/api/diagram?slug=${slug}`
+      );
+
+      const data = await response.json();
+
+      console.log("the diagram are ", data);
+      return data as DiagramWithWorkspaceWithCreator;
+    } catch (error) {
+      console.error("Error fetching diagram:", error);
+      // fetch_teams()
+    }
+    return {} as DiagramWithWorkspaceWithCreator;
+  };
+
+  //loading the diagram ends here
+
+  const {
+    nodes,
+    edges,
+    addEdge,
+    addNode,
+    onNodesChange,
+    onEdgesChange,
+    onConnect,
+  } = useStore(useShallow(selector));
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance>();
 
@@ -149,7 +182,7 @@ function Flow() {
         y: event.clientY,
       });
       const newNode: Node = {
-        id: "Idea-" + Math.round(Math.random()*30+100),
+        id: "Idea-" + Math.round(Math.random() * 30 + 100),
         type,
         position: position as XYPosition,
         data: {
@@ -159,7 +192,7 @@ function Flow() {
         },
       };
 
-      addNode(newNode)
+      addNode(newNode);
     },
     [reactFlowInstance]
   );
@@ -221,7 +254,7 @@ function Flow() {
       type: "IdeaNode",
     };
 
-    addNode(newNode)
+    addNode(newNode);
   }
 
   return (
@@ -251,12 +284,14 @@ function Flow() {
         {/* <Panel position={"bottom-right"}>
           
         </Panel> */}
-        
+
         <Panel position="top-left" className="w-full">
           {/* <NodeSelectorBar/> */}
-          <div className="header flex gap-2 justify-between px-10 py-1 w-full z-50">
-            <Breadcrumb />
-            <NodeSelectorBar/>
+          {/* <pre>{JSON.stringify(diagram, null, 2)}</pre> */}
+
+          <div className="header flex gap-2 justify-between py-1 w-full z-50">
+            <DiagramBreadCrumb diagram={diagram as DiagramWithWorkspaceWithCreator}/>
+            <NodeSelectorBar />
             <div className="">
               <Input
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
@@ -265,14 +300,12 @@ function Flow() {
               />
             </div>
           </div>
-          
         </Panel>
         <Background
           className="bg-[#5e301d2c]"
           color={"#3097ff"}
           variant={BackgroundVariant.Lines}
           lineWidth={0.09}
-          
           gap={40}
         />
         <Controls position="bottom-left">
@@ -295,14 +328,24 @@ function Flow() {
               onDragStart={(event) => onDragStart(event, "default")}
               draggable={true}
             >
-              <FaRegPlusSquare/>
+              <FaRegPlusSquare />
             </div>
           </div>
         </Controls>
-        <MiniMap className="bg-[#3b190b81]" maskColor="#4b291b4a" maskStrokeWidth={1} position="bottom-right" offsetScale={0} nodeStrokeColor={"green"} nodeBorderRadius={15}
-         style={{
-            border: "1px solid #3b190b81 "
-          }} pannable zoomable />
+        <MiniMap
+          className="bg-[#3b190b81]"
+          maskColor="#4b291b4a"
+          maskStrokeWidth={1}
+          position="bottom-right"
+          offsetScale={0}
+          nodeStrokeColor={"green"}
+          nodeBorderRadius={15}
+          style={{
+            border: "1px solid #3b190b81 ",
+          }}
+          pannable
+          zoomable
+        />
       </ReactFlow>
     </div>
   );

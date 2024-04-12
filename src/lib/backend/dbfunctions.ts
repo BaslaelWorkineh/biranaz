@@ -2,7 +2,7 @@ import { DiagramInputSchema, WorkspaceInputSchema } from "base/types/dbTypes";
 import { db } from "./db";
 import { auth } from "./auth";
 import { slugify } from "../utils";
-import { Workspace } from "@prisma/client";
+import { Prisma, Workspace } from "@prisma/client";
 
 
 
@@ -320,18 +320,20 @@ export async function getDiagramById(diagramId:string){
 
 
 
-export async function getDiagramsBySlug(slug:string){
+
+export async function getDiagramBySlug(slug:string){
     let response:object = {message :`failed to fetch diagram for the workspace name ${slug} from the database`}
     let status = 400;
     try{
         let result: any
         
-        result =  await db.diagram.findMany({
+        result =  await db.diagram.findUnique({
              where:{
                  slug:slug
              },
              include:{
-                workspace:true
+                workspace:true,
+                creator:true
              }
              
          })
@@ -394,7 +396,10 @@ export async function getDiagramsByWorkspaceId(workspaceId:string){
             {
             where:{
                 workspaceId:workspaceId
-                }
+                },
+            include:{
+                workspace:true
+            }
 
         })
       
@@ -427,7 +432,11 @@ export async function getDiagramsByWorkspaceSlug(workspaceSlug:string){
             {
             where:{
                 workspaceId:workspace.id
-                }
+                },
+            include:{
+                workspace:true
+            }
+                
 
         })
       

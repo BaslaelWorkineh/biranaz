@@ -1,4 +1,4 @@
-import { DiagramType } from "@prisma/client"
+import { Diagram, DiagramType, User, Workspace } from "@prisma/client"
 
 export type WorkspaceInputSchema  = {
     workspaceName:string,
@@ -14,4 +14,12 @@ export type DiagramInputSchema =  {
     type:DiagramType,
     workspaceId:string
 
+}
+
+export type DiagramWithWorkspace  = Diagram & {
+    workspace:Workspace
+}
+export type DiagramWithWorkspaceWithCreator = Diagram & {
+    workspace:Workspace,
+    creator:User
 }

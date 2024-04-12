@@ -1,4 +1,4 @@
-import { CreateDiagram, CreateWorspace, getAllDiagrams, getDiagramById, getDiagramsBySlug, getDiagramsByUserId,getDiagramsByWorkspaceId,getDiagramsByWorkspaceSlug } from "base/lib/backend/dbfunctions";
+import { CreateDiagram, CreateWorspace, getAllDiagrams, getDiagramById, getDiagramBySlug, getDiagramsByUserId,getDiagramsByWorkspaceId,getDiagramsByWorkspaceSlug } from "base/lib/backend/dbfunctions";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req:NextRequest){
@@ -18,7 +18,7 @@ export async function GET(req:NextRequest){
 
   let result:{data:any,status:any}
   if(slug){
-    result = await getDiagramsBySlug(slug)
+    result = await getDiagramBySlug(slug)
   }
 
   else if(workspaceSlug){
@@ -33,9 +33,6 @@ export async function GET(req:NextRequest){
 
   else if (userId){
       result = await getDiagramsByUserId(userId)
-  }
-  else if (name){
-    result = await getDiagramsBySlug(name)
   }
   else{
      result = await getAllDiagrams()  

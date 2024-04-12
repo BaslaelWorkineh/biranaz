@@ -9,6 +9,7 @@ import { ImageCard, ImageCardFallback } from 'base/app/components/ImageCard'
 import { CreateDiagramModal } from 'base/app/components/modals/createDiagramModal'
 import { WorkspaceTable } from 'base/app/components/workspace/WorkspaceTable'
 import { getDomain } from 'base/lib/utils'
+import { DiagramWithWorkspace } from 'base/types/dbTypes'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { Suspense } from 'react'
@@ -30,12 +31,15 @@ const Page = () => {
       const response:Response = await fetch(`${getDomain()}/api/diagram?workspaceSlug=${slug}`);
       
       const data = await response.json();
-      return data as Diagram[]
+
+      console.log("the diagrams are ",data)
+      return data as DiagramWithWorkspace[]
+
     } catch (error) { 
       console.error("Error fetching diagrams:", error);
       // fetch_teams()
     }
-    return [] as Diagram[]
+    return [] as DiagramWithWorkspace[]
   };
 
   const fetch_workspace =async () => {
@@ -108,7 +112,7 @@ const Page = () => {
 
             <div className="activity-list grid grid-cols-3 gap-3 justify-evenly w-full">
              {
-              diagrams && diagrams?.map((diagram:Diagram,index)=>(
+              diagrams && diagrams?.map((diagram:DiagramWithWorkspace,index)=>(
                 <ImageCard diagram={diagram} key={index}/>
               ))
             } 
