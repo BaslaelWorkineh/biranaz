@@ -329,6 +329,9 @@ export async function getDiagramsBySlug(slug:string){
         result =  await db.diagram.findMany({
              where:{
                  slug:slug
+             },
+             include:{
+                workspace:true
              }
              
          })

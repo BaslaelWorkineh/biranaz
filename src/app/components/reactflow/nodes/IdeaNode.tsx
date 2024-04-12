@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useContext, useEffect } from 'react';
 import { Handle, NodeProps, NodeResizeControl, NodeToolbar, Position } from 'reactflow';
 
 import {
@@ -14,15 +14,37 @@ import {
 
 import { CgEditUnmask } from "react-icons/cg";
 import { FaCopy, FaEdit } from 'react-icons/fa';
+import { NodeDrawer } from '../nodeDrawer';
+import Drawer from 'react-modern-drawer'
+
+//import styles 👇
+import 'react-modern-drawer/dist/index.css'
+import { nodeModalContext } from 'base/contexts/nodeModalContextProvider';
+
 const style = {
   padding: 10,
   background: '#fff',
   border: '1px solid #ddd',
 };
 
-const BiDirectionalNode = ({ data }: NodeProps) => {
-  return (    
-    <Card onClick={()=>alert(`the node ${data.name }-${data.label} is clicked.`)} className={`relative flex flex-col gap-6 justify-center items-center min-w-fit min-h-fit max-h-[40rem] ${data.label>5? 'bg-[#e0c17f]':'bg-[rgb(242,243,216)]'}  text-gray-900 font-bold text-lg p-24 rounded-[15px] shadow-lg shadow-[rgba(30,30,30,1)] border-2 border-brown-600`}>
+const BiDirectionalNode = (node: NodeProps) => {
+  const {data }  = node
+  const context = useContext(nodeModalContext)
+      
+  const handleClick = ()=>{
+    // node.data.label = "Node number"+node.xPos
+    context?.setNode(node)
+    context?.setIsOpen(true)
+
+  }
+
+  return(
+  <>
+  
+       
+    <Card onClick={handleClick} className={` flex flex-col gap-6 justify-center items-center min-w-fit min-h-fit max-h-[40rem] ${data.label>5? 'bg-[#e0c17f]':'bg-[rgb(242,243,216)]'}  text-gray-900 font-bold text-sm p-24 rounded-[15px] shadow-lg shadow-[rgba(30,30,30,1)] border-2 border-brown-600`}>
+    
+            
       <NodeResizeControl minHeight={250} minWidth={400}>
               <div className="rounded-full p-2 bg-stone-800 text-sm font-semibold h-2 w-2 "></div>
             </NodeResizeControl>
@@ -153,6 +175,7 @@ const BiDirectionalNode = ({ data }: NodeProps) => {
         </div>
       </CardBody>
       <CardFooter className="pt-3">
+        
         <Button size="lg" fullWidth={true}>
           Reserve
         </Button>
@@ -161,6 +184,7 @@ const BiDirectionalNode = ({ data }: NodeProps) => {
           {`bg-[${data?.rgba}]`}
           <Handle style={{minWidth:'1.5rem',minHeight:'1.5rem',right:"-3%"}} type="source" position={Position.Right} id="right" />
     </Card>
+  </> 
         
 
     

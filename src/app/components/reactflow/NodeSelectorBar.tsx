@@ -85,15 +85,15 @@ export function NodeSelectorBar() {
   }, []);
  
   const navList = (
-    <ul className="mt-2 mb-4 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="flex flex-col md:flex-row gap-3 lg:mb-0 lg:mt-0 lg:items-center lg:gap-6">
      
       {/* this is a tooltip with descriptions about the NODETYPE */}
       {
         NodeSelectorItems.map((item,index)=>(
          
-          <div className="hover:bg-brown-100 cursor-move transition-all duration-500 " key={index}>
+          <div className="hover:bg-brown-100 cursor-pointer transition-all duration-500 p-1 " key={index}>
               <Tooltip
-              
+                  style={{cursor:"pointer"}}
                 content={
                   <div className="w-80">
                     <Typography color="yellow" className="font-medium">
@@ -116,8 +116,8 @@ export function NodeSelectorBar() {
                     // onDragCapture={(event)=>onDragStart(event,'IdeaNode')}
                     variant="small"
                     color="red"
-                    onDragStart={(event)=>onDragStart(event,'IdeaNode')} className='flex flex-col justify-center items-center gap-2 bg-stone-800 rounded-[8px] text-stone-200 font-semibold px-2 py-2 cursor-auto ' draggable>
-                  <item.icon strokeWidth={2.5} className="h-6 w-6"  color="gray"/>
+                    onDragStart={(event)=>onDragStart(event,'IdeaNode')} className='flex flex-col justify-center items-center gap-2 bg-stone-800 rounded-[8px] text-stone-200 font-semibold px-2  cursor-auto ' draggable>
+                  <item.icon strokeWidth={2.5} className="h-3 w-3"  color="gray"/>
                   <small className="text-[8px] text-gray-800">{item.label}</small>
                   </Typography>
 
@@ -133,13 +133,11 @@ export function NodeSelectorBar() {
   );
  
   return (
-    <Navbar className="mx-auto min-w-full max-w-screen-xl px-4 py-2 lg:px-8 lg:py-4">
-      <div className="container mx-auto flex items-center justify-between text-gray-900">
+    <Navbar className="w-fit ">
+      <div className="container flex items-center justify-between text-gray-900">
         
         <div className="hidden lg:block">{navList}</div>
-        <div className="px-6">
-        <Input icon={<MagnifyingGlassIcon className="h-5 w-5" />} label="Search" crossOrigin={undefined} />
-        </div>
+       
         <IconButton
           variant="text"
           className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
