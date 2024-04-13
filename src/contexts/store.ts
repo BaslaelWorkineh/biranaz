@@ -39,7 +39,7 @@ let initialEdges: Edge[] = [
   },
 ];
 
-const storedDiagram = localStorage.getItem("Diagram")
+const storedDiagram = typeof window !== "undefined" ? window.localStorage.getItem("Diagram")
  
 
 
