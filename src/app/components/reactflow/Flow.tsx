@@ -16,11 +16,11 @@ import CustomNode from "./nodes/customNode";
 import IdeaNode from "./nodes/IdeaNode";
 import BiEdge from "./edges/BiEdge";
 import EdgeWithButton from "./edges/EdgeWithButton";
-import { FaNetworkWired, FaRegPlusSquare, FaSave } from "react-icons/fa";
+import { FaNetworkWired, FaRegPlusSquare, FaSave, FaUserAstronaut } from "react-icons/fa";
 
 import { NodeSelectorBar } from "base/app/components/reactflow/NodeSelectorBar";
-import { Input } from "@material-tailwind/react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { Input, Button, ButtonGroup } from "@material-tailwind/react";
+import { Cog8ToothIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import useStore from "base/contexts/store";
 import { useShallow } from "zustand/react/shallow";
 import { selector } from "base/contexts/store";
@@ -259,9 +259,33 @@ function Flow() {
 
   return (
     <div className="relative h-screen">
-      <small className="absolute right-0 top-0 px-3 py-1 rounded-bl-[10px] bg-brown-900 text-white text-xs z-50">
+      <div className="header absolute  flex gap-2 justify-between items-center py-1 w-full z-50 bg-white">
+        <DiagramBreadCrumb
+          diagram={diagram as DiagramWithWorkspaceWithCreator}
+        />
+        <NodeSelectorBar />
+        <ButtonGroup color="brown" size="sm" className="px-4">
+              <Button
+                className="bg-green-600"
+                
+                size="sm"
+                onClick={() => alert("this is a test .")}
+              >
+                <small>save Changes</small>
+              </Button>
+              <Button
+                color="green"
+                size="sm"
+                onClick={() => alert("this is a test .")}
+              >
+                <Cog8ToothIcon className="h-5 w-5" strokeWidth={2} />
+              </Button>
+        </ButtonGroup>
+        
+      </div>
+      {/* <small className="absolute right-0 top-0 px-3 py-1 rounded-bl-[10px] bg-brown-900 text-white text-xs z-50">
         verson 1.0
-      </small>
+      </small> */}
       <ReactFlow
         onInit={setReactFlowInstance}
         onDrop={onDrop}
@@ -285,22 +309,6 @@ function Flow() {
           
         </Panel> */}
 
-        <Panel position="top-left" className="w-full">
-          {/* <NodeSelectorBar/> */}
-          {/* <pre>{JSON.stringify(diagram, null, 2)}</pre> */}
-
-          <div className="header flex gap-2 justify-between py-1 w-full z-50">
-            <DiagramBreadCrumb diagram={diagram as DiagramWithWorkspaceWithCreator}/>
-            <NodeSelectorBar />
-            <div className="">
-              <Input
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-                label="Search"
-                crossOrigin={undefined}
-              />
-            </div>
-          </div>
-        </Panel>
         <Background
           className="bg-[#5e301d2c]"
           color={"#3097ff"}

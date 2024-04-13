@@ -35,22 +35,13 @@ export function DiagramBreadCrumb({
 
   return (
     diagram && (
-      <Breadcrumbs className="flex items-center justify-center ">
-        <a href="/dashboard" className="opacity-60 flex item-senter">
-          <svg
-            xmlns="http://www.w3.org/4000/svg"
-            className="h-10 w-10"
-            viewBox="0 0 40 40"
-            fill="currentColor"
-          >
-            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-          </svg>
-        </a>
-        <a href={`/u/${diagram.creator.id}`} className=" flex gap-2 justify-center items-center">
+      <Breadcrumbs className="flex items-center justify-center  w-full">
+        
+        <a href={`/u/${diagram?.creator?.id}`} className=" flex gap-2 justify-center items-center">
           <div className="relative h-[2rem] w-[2rem]">
             <Image
-              src={diagram.creator.image as string}
-              alt={diagram.creator.name as string}
+              src={diagram?.creator?.image as string}
+              alt={diagram?.creator?.name as string}
               objectFit="cover"
               layout="fill"
               className="rounded-full object-cover border-2 border-brown-100 "
@@ -58,22 +49,22 @@ export function DiagramBreadCrumb({
           </div>
 
           <Typography variant="small" className="font-normal opacity-80">
-            {shortener(diagram.creator.name as string, 7)}
+            {shortener(diagram?.creator?.name as string, 7)}
           </Typography>
         </a>
 
-        <a href={`/workspace/${diagram.workspace.slug}`} className="flex gap-2 justify-center items-center">
+        <a href={`/workspace/${diagram?.workspace?.slug}`} className="flex gap-2 justify-center items-center">
           <div className="relative h-[2rem] w-[2rem]">
             <Image
-              src={diagram.workspace.cover as string}
-              alt={diagram.workspace.title as string}
+              src={diagram?.workspace?.cover as string}
+              alt={diagram?.workspace?.title as string}
               objectFit="cover"
               layout="fill"
               className="rounded-full object-cover border-2 border-brown-100 "
             />
           </div>
           <Typography variant="small" className="font-normal opacity-80">
-            {shortener(diagram.workspace.title as string, 7)}
+            {shortener(diagram?.workspace?.title as string, 7)}
           </Typography>
         </a>
 
