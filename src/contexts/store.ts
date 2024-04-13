@@ -16,7 +16,7 @@ import {
 } from 'reactflow';
 
 // initial nodes and edges
-const initialNodes: Node[] = [
+let initialNodes: Node[] = [
   {
     id: '1',
     type:'IdeaNode',
@@ -30,7 +30,7 @@ const initialNodes: Node[] = [
     position: { x: 100, y: 100 },
   },
 ];
-const initialEdges: Edge[] = [
+let initialEdges: Edge[] = [
   {
     id: 'e1-2',
     source: '1',
@@ -38,6 +38,10 @@ const initialEdges: Edge[] = [
     type: 'buttonedge',
   },
 ];
+
+const storedDiagram = localStorage.getItem("Diagram")
+ 
+
 
 
 export type RFState = {
@@ -58,8 +62,8 @@ export type RFState = {
 
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
 const useStore = create<RFState>((set, get) => ({
-  nodes: initialNodes,
-  edges: initialEdges,
+  nodes: storedDiagram?JSON.parse(storedDiagram as string).nodes:initialNodes,
+  edges: storedDiagram?JSON.parse(storedDiagram as string).edges:initialEdges,
   onNodesChange: (changes: NodeChange[]) => {
     set({
       nodes: applyNodeChanges(changes, get().nodes),

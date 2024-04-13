@@ -203,12 +203,12 @@ function Flow() {
   };
 
   const saveChanges = () => {
-    const information = {
+    const diagramInfo = {
       nodes,
       edges,
     };
 
-    localStorage.setItem("information", JSON.stringify(information));
+    localStorage.setItem("Diagram", JSON.stringify(diagramInfo));
     alert("saved sucecssfully");
   };
 
