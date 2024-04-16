@@ -16,11 +16,22 @@ import CustomNode from "./nodes/customNode";
 import IdeaNode from "./nodes/IdeaNode";
 import BiEdge from "./edges/BiEdge";
 import EdgeWithButton from "./edges/EdgeWithButton";
-import { FaNetworkWired, FaRedo, FaRegPlusSquare, FaSave, FaUndo, FaUserAstronaut } from "react-icons/fa";
+import {
+  FaMap,
+  FaNetworkWired,
+  FaRedo,
+  FaRegPlusSquare,
+  FaSave,
+  FaUndo,
+  FaUserAstronaut,
+} from "react-icons/fa";
 
 import { NodeSelectorBar } from "base/app/components/reactflow/NodeSelectorBar";
 import { Input, Button, ButtonGroup } from "@material-tailwind/react";
-import { Cog8ToothIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import {
+  Cog8ToothIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 import useStore from "base/contexts/store";
 import { useShallow } from "zustand/react/shallow";
 import { selector } from "base/contexts/store";
@@ -111,13 +122,11 @@ function Flow() {
     setIsrecordable,
     isRecordable,
     isUndoable,
-    isRedoable
-  
+    isRedoable,
   } = useStore(useShallow(selector));
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance>();
-
-    
+  const [mapOpen, setMapOpen] = useState(false);
 
   // useEffect(() => {
   //   const initialNodes = localStorage.getItem("information")
@@ -210,15 +219,13 @@ function Flow() {
     // setIsrecordable(false)
     event.dataTransfer.setData("reactflow-node", nodeType);
     event.dataTransfer.effectAllowed = "move";
-
   };
 
-
   const onDragStop = (event: any, nodeType: any) => {
-    alert("this is shown after the drag stops "+isRecordable)
-    setIsrecordable(true)
-    console.log("drag stopped")
-  }
+    alert("this is shown after the drag stops " + isRecordable);
+    setIsrecordable(true);
+    console.log("drag stopped");
+  };
 
   const saveChanges = () => {
     const diagramInfo = {
@@ -283,24 +290,25 @@ function Flow() {
         />
         <NodeSelectorBar />
         <ButtonGroup color="brown" size="sm" className="px-4">
-              <Button
-                className="bg-green-600"
-                
-                size="sm"
-                onClick={() => alert("this is a test .")}
-              >
-                <small>save Changes</small>
-              </Button>
-              <Button
-                color="green"
-                size="sm"
-                onClick={() => alert("this is a test .")}
-              >
-                <Cog8ToothIcon className="h-5 w-5" strokeWidth={2} />
-              </Button>
+          <Button
+            className="bg-green-600"
+            size="sm"
+            onClick={() => alert("this is a test .")}
+          >
+            <small>save Changes</small>
+          </Button>
+          <Button
+            color="green"
+            size="sm"
+            onClick={() => alert("this is a test .")}
+          >
+            <Cog8ToothIcon className="h-5 w-5" strokeWidth={2} />
+          </Button>
         </ButtonGroup>
-        
       </div>
+      <button onClick={()=>setMapOpen(!mapOpen)} className="minimap-toogle absolute bottom-2 right-2 p-2 rounded-lg bg-brown-50 drop-shadow-sm hover:bg-brown-400 cursor-pointer transition-all duration-500 z-40">
+        <FaMap />
+      </button>
       {/* <small className="absolute right-0 top-0 px-3 py-1 rounded-bl-[10px] bg-brown-900 text-white text-xs z-50">
         verson 1.0
       </small> */}
@@ -323,8 +331,8 @@ function Flow() {
         connectionLineStyle={{ strokeWidth: "15px", stroke: "black" }}
         minZoom={0.05}
         maxZoom={100}
-        onNodeDrag={()=>setIsrecordable(false)}
-        onNodeDragStop={()=>setIsrecordable(true)}
+        onNodeDrag={() => setIsrecordable(false)}
+        onNodeDragStop={() => setIsrecordable(true)}
       >
         {/* <Panel position={"bottom-right"}>
           
@@ -350,7 +358,7 @@ function Flow() {
               onClick={undo}
               className="bg-stone-800 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full disabled:grayscale"
             >
-              <FaUndo/>
+              <FaUndo />
             </button>
 
             <button
@@ -358,9 +366,8 @@ function Flow() {
               disabled={!isRedoable}
               className="bg-stone-800 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full disabled:grayscale"
             >
-              <FaRedo/>
+              <FaRedo />
             </button>
-
 
             {/* <h1
               onDragStart={(event) => onDragStart(event, "IdeaNode")}
@@ -378,20 +385,22 @@ function Flow() {
             </div> */}
           </div>
         </Controls>
-        <MiniMap
-          className="bg-[#3b190b81]"
-          maskColor="#4b291b4a"
-          maskStrokeWidth={1}
-          position="bottom-right"
-          offsetScale={0}
-          nodeStrokeColor={"green"}
-          nodeBorderRadius={15}
-          style={{
-            border: "1px solid #3b190b81 ",
-          }}
-          pannable
-          zoomable
-        />
+        {mapOpen && (
+          <MiniMap
+            className="bg-[#3b190b81]"
+            maskColor="#4b291b4a"
+            maskStrokeWidth={1}
+            position="bottom-right"
+            offsetScale={0}
+            nodeStrokeColor={"green"}
+            nodeBorderRadius={15}
+            style={{
+              border: "1px solid #3b190b81 ",
+            }}
+            pannable
+            zoomable
+          />
+        )}
       </ReactFlow>
     </div>
   );
