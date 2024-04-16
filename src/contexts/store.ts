@@ -84,7 +84,7 @@ export type RFState = {
 const useStore = create<RFState>((set, get) => ({
   nodes: storedDiagram?JSON.parse(storedDiagram as string).nodes:initialNodes,
   edges: storedDiagram?JSON.parse(storedDiagram as string).edges:initialEdges,
-  isRecordable:false,
+  isRecordable:true,
   isRedoable:false,
   isUndoable:false,
   // history:{
