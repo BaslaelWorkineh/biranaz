@@ -180,9 +180,9 @@ const BiDirectionalNode = (node: NodeProps) => {
           Reserve
         </Button>
       </CardFooter>
-      <Handle style={{minWidth:'5%',minHeight:'6%',maxWidth:'12%',maxHeight:'15%',left:"-3%"}} type="target" position={Position.Left} id="left" />
+      <Handle style={{minWidth:'5%',minHeight:'30%',maxWidth:'12%',maxHeight:'15%',left:"-3%",borderRadius:'4px'}} className='hover:bg-brown-600 transition-all duration-500' type="target" position={Position.Left} id="left" />
           {`bg-[${data?.rgba}]`}
-          <Handle style={{minWidth:'1.5rem',minHeight:'1.5rem',right:"-3%"}} type="source" position={Position.Right} id="right" />
+          <Handle style={{minWidth:'5%',minHeight:'30%',maxWidth:'12%',maxHeight:'15%',right:"-3%",borderRadius:'4px'}} type="source" position={Position.Right} className='hover:bg-brown-600 transition-all duration-500' id="right" />
     </Card>
   </> 
         

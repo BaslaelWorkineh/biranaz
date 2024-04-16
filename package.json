@@ -34,8 +34,10 @@
     "react-modern-drawer": "^1.2.2",
     "reactflow": "^11.10.4",
     "tailwind-merge": "^2.2.2",
+    "use-undoable": "^5.0.0",
     "yup": "^1.4.0",
     "zod": "^3.22.4",
+    "zundo": "^2.1.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReactFlow, {
   Controls,
   Background,
@@ -16,7 +16,7 @@ import CustomNode from "./nodes/customNode";
 import IdeaNode from "./nodes/IdeaNode";
 import BiEdge from "./edges/BiEdge";
 import EdgeWithButton from "./edges/EdgeWithButton";
-import { FaNetworkWired, FaRegPlusSquare, FaSave, FaUserAstronaut } from "react-icons/fa";
+import { FaNetworkWired, FaRedo, FaRegPlusSquare, FaSave, FaUndo, FaUserAstronaut } from "react-icons/fa";
 
 import { NodeSelectorBar } from "base/app/components/reactflow/NodeSelectorBar";
 import { Input, Button, ButtonGroup } from "@material-tailwind/react";
@@ -106,9 +106,18 @@ function Flow() {
     onNodesChange,
     onEdgesChange,
     onConnect,
+    undo,
+    redo,
+    setIsrecordable,
+    isRecordable,
+    isUndoable,
+    isRedoable
+  
   } = useStore(useShallow(selector));
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance>();
+
+    
 
   // useEffect(() => {
   //   const initialNodes = localStorage.getItem("information")
@@ -198,9 +207,18 @@ function Flow() {
   );
 
   const onDragStart = (event: any, nodeType: any) => {
+    // setIsrecordable(false)
     event.dataTransfer.setData("reactflow-node", nodeType);
     event.dataTransfer.effectAllowed = "move";
+
   };
+
+
+  const onDragStop = (event: any, nodeType: any) => {
+    alert("this is shown after the drag stops "+isRecordable)
+    setIsrecordable(true)
+    console.log("drag stopped")
+  }
 
   const saveChanges = () => {
     const diagramInfo = {
@@ -290,6 +308,7 @@ function Flow() {
         onInit={setReactFlowInstance}
         onDrop={onDrop}
         onDragOver={onDragOver}
+        // onNodeDragStop={onDragStop}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -304,6 +323,8 @@ function Flow() {
         connectionLineStyle={{ strokeWidth: "15px", stroke: "black" }}
         minZoom={0.05}
         maxZoom={100}
+        onNodeDrag={()=>setIsrecordable(false)}
+        onNodeDragStop={()=>setIsrecordable(true)}
       >
         {/* <Panel position={"bottom-right"}>
           
@@ -317,27 +338,44 @@ function Flow() {
           gap={40}
         />
         <Controls position="bottom-left">
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-0 mt-5">
             <button
               onClick={saveChanges}
-              className="bg-stone-800 rounded-[8px] text-stone-200 text-lg font-semibold px-2 py-2 cursor-pointer"
+              className="bg-stone-800 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full"
             >
               <FaSave />
             </button>
-            <h1
+
+            <button
+              onClick={undo}
+              className="bg-stone-800 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full disabled:grayscale"
+            >
+              <FaUndo/>
+            </button>
+
+            <button
+              onClick={redo}
+              disabled={!isRedoable}
+              className="bg-stone-800 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full disabled:grayscale"
+            >
+              <FaRedo/>
+            </button>
+
+
+            {/* <h1
               onDragStart={(event) => onDragStart(event, "IdeaNode")}
               className="bg-stone-800 rounded-[8px] text-stone-200 text-lg font-semibold px-2 py-2 cursor-auto "
               draggable
             >
               <FaNetworkWired />
-            </h1>
-            <div
+            </h1> */}
+            {/* <div
               className="dndnode"
               onDragStart={(event) => onDragStart(event, "default")}
               draggable={true}
             >
               <FaRegPlusSquare />
-            </div>
+            </div> */}
           </div>
         </Controls>
         <MiniMap
