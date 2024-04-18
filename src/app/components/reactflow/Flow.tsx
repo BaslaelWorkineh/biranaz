@@ -40,6 +40,7 @@ import { cn, getDomain } from "base/lib/utils";
 import { DiagramWithWorkspaceWithCreator } from "base/types/dbTypes";
 import { useParams } from "next/navigation";
 import { DiagramBreadCrumb } from "../DiagramBreadCrumb";
+import Loader from "../Loader";
 
 const nodeTypes = {
   CustomNode: CustomNode,
@@ -309,6 +310,7 @@ function Flow() {
       <Button onClick={()=>setMapOpen(!mapOpen)} className="minimap-toogle absolute bottom-2 right-2 p-2 rounded-lg bg-brown-50 drop-shadow-sm hover:bg-brown-400 cursor-pointer transition-all duration-500 z-40">
         <FaMap />
       </Button>
+      <Loader isVisible={diagramLoading} />
       {/* <small className="absolute right-0 top-0 px-3 py-1 rounded-bl-[10px] bg-brown-900 text-white text-xs z-50">
         verson 1.0
       </small> */}
