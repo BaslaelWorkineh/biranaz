@@ -182,17 +182,19 @@ const useStore = create<RFState>((set, get) => ({
           future: [],
         },
       }));
+      if(get().history.past.length>0){
+        get().setIsUndoable(true)
+      }
     }
   },
   // Action for undo
   undo: () => {
     const { past, future } = get().history;
     if (past.length === 0){
-      get().setIsUndoable(false)
       return;
     };
     //if the past is not empty , then we can undo
-    get().setIsUndoable(true)
+    
     const previous = past[past.length - 1];
     set({
       nodes: previous.nodes,
@@ -202,16 +204,22 @@ const useStore = create<RFState>((set, get) => ({
         future: [get().history.past[past.length - 1], ...future],
       },
     });
+    if(get().history.past.length===0){
+      get().setIsUndoable(false)
+    }
+    if(get().history.future.length>0){
+      get().setIsRedoable(true)
+    }
   },
   // Action for redo
   redo: () => {
     const { past, future } = get().history;
     if (future.length === 0){
-      get().setIsRedoable(false)
+      
       return;
     }
     //if the future is not empty , then we can redo
-    get().setIsRedoable(true)
+
     const next = future[0];
     set({
       nodes: next.nodes,
@@ -221,6 +229,12 @@ const useStore = create<RFState>((set, get) => ({
         future: future.slice(1),
       },
     });
+    if(get().history.future.length===0){
+      get().setIsRedoable(false)
+    }
+    if(get().history.past.length>0){
+      get().setIsUndoable(true)
+    }
   },
   setIsRecordable:(value:boolean)=>{
     set({

@@ -36,7 +36,7 @@ import useStore from "base/contexts/store";
 import { useShallow } from "zustand/react/shallow";
 import { selector } from "base/contexts/store";
 import { useQuery } from "@tanstack/react-query";
-import { getDomain } from "base/lib/utils";
+import { cn, getDomain } from "base/lib/utils";
 import { DiagramWithWorkspaceWithCreator } from "base/types/dbTypes";
 import { useParams } from "next/navigation";
 import { DiagramBreadCrumb } from "../DiagramBreadCrumb";
@@ -49,7 +49,7 @@ const nodeTypes = {
 const edgeTypes = {
   bidirectional: BiEdge,
 
-  buttonedge: EdgeWithButton,
+  Buttonedge: EdgeWithButton,
 };
 
 // const nodes = [
@@ -136,10 +136,10 @@ function Flow() {
   //     ? JSON.parse(localStorage.getItem("information") as string).edges
   //     : [
   //         {
-  //           id: "edge-button",
+  //           id: "edge-Button",
   //           source: "bi-2",
   //           target: "self-1",
-  //           type: "buttonedge",
+  //           type: "Buttonedge",
   //         },
   //         {
   //           id: "edge-bi-1",
@@ -306,9 +306,9 @@ function Flow() {
           </Button>
         </ButtonGroup>
       </div>
-      <button onClick={()=>setMapOpen(!mapOpen)} className="minimap-toogle absolute bottom-2 right-2 p-2 rounded-lg bg-brown-50 drop-shadow-sm hover:bg-brown-400 cursor-pointer transition-all duration-500 z-40">
+      <Button onClick={()=>setMapOpen(!mapOpen)} className="minimap-toogle absolute bottom-2 right-2 p-2 rounded-lg bg-brown-50 drop-shadow-sm hover:bg-brown-400 cursor-pointer transition-all duration-500 z-40">
         <FaMap />
-      </button>
+      </Button>
       {/* <small className="absolute right-0 top-0 px-3 py-1 rounded-bl-[10px] bg-brown-900 text-white text-xs z-50">
         verson 1.0
       </small> */}
@@ -347,27 +347,30 @@ function Flow() {
         />
         <Controls position="bottom-left">
           <div className="flex flex-col gap-0 mt-5">
-            <button
+            <Button
               onClick={saveChanges}
-              className="bg-stone-800 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full"
+              className="bg-brown-400 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full rounded-none transition-all duration-500"
             >
               <FaSave />
-            </button>
+            </Button>
 
-            <button
+            {
+            <Button
               onClick={undo}
-              className="bg-stone-800 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full disabled:grayscale"
+              disabled={!isUndoable}
+              className="bg-brown-400 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full disabled:grayscale rounded-none transition-all duration-500"
             >
               <FaUndo />
-            </button>
+            </Button>
+            }
 
-            <button
+            <Button
               onClick={redo}
               disabled={!isRedoable}
-              className="bg-stone-800 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full disabled:grayscale"
+              className="bg-brown-400 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full disabled:grayscale rounded-none transition-all duration-500"
             >
               <FaRedo />
-            </button>
+            </Button>
 
             {/* <h1
               onDragStart={(event) => onDragStart(event, "IdeaNode")}
