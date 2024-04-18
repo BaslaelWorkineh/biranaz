@@ -285,6 +285,11 @@ function Flow() {
 
   return (
     <div className="relative h-screen">
+      <div className="absolute bottom-2 right-2 z-40 ">
+      <Button onClick={()=>setMapOpen(!mapOpen)} className="minimap-toogle p-2 rounded-lg bg-brown-500 drop-shadow-sm hover:bg-brown-400 cursor-pointer transition-all duration-500 z-40">
+        <FaMap />
+      </Button>
+      </div>
       <div className="header absolute  flex gap-2 justify-between items-center py-1 w-full z-50 bg-white">
         <DiagramBreadCrumb
           diagram={diagram as DiagramWithWorkspaceWithCreator}
@@ -307,9 +312,7 @@ function Flow() {
           </Button>
         </ButtonGroup>
       </div>
-      <Button onClick={()=>setMapOpen(!mapOpen)} className="minimap-toogle absolute bottom-2 right-2 p-2 rounded-lg bg-brown-50 drop-shadow-sm hover:bg-brown-400 cursor-pointer transition-all duration-500 z-40">
-        <FaMap />
-      </Button>
+      
       <Loader isVisible={diagramLoading} />
       {/* <small className="absolute right-0 top-0 px-3 py-1 rounded-bl-[10px] bg-brown-900 text-white text-xs z-50">
         verson 1.0
@@ -390,7 +393,7 @@ function Flow() {
             </div> */}
           </div>
         </Controls>
-        {mapOpen && (
+        {mapOpen&&(
           <MiniMap
             className="bg-[#3b190b81]"
             maskColor="#4b291b4a"

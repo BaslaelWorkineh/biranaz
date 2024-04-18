@@ -6,3 +6,5 @@ const Loader = ({isVisible}:{isVisible:boolean}) => {
 }
 
 export default Loader
+
+
