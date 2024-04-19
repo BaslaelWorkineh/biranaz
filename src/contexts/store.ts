@@ -13,7 +13,7 @@ import {
   applyNodeChanges,
   applyEdgeChanges,
   NodeProps,
-  NodeTypes,
+
 } from 'reactflow';
 
 // initial nodes and edges

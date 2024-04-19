@@ -12,8 +12,6 @@ import ReactFlow, {
   XYPosition,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import CustomNode from "./nodes/customNode";
-import IdeaNode from "./nodes/IdeaNode";
 import BiEdge from "./edges/BiEdge";
 import EdgeWithButton from "./edges/EdgeWithButton";
 import {
@@ -41,11 +39,8 @@ import { DiagramWithWorkspaceWithCreator } from "base/types/dbTypes";
 import { useParams } from "next/navigation";
 import { DiagramBreadCrumb } from "../DiagramBreadCrumb";
 import Loader from "../Loader";
+import {nodeTypes} from 'base/app/components/reactflow/nodes/index'
 
-const nodeTypes = {
-  CustomNode: CustomNode,
-  IdeaNode: IdeaNode,
-};
 
 const edgeTypes = {
   bidirectional: BiEdge,
