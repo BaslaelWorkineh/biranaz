@@ -1,10 +1,18 @@
 import IdeaNode from "../nodes/IdeaNode";
+import KnowledgeNode from "./KnowledgeNode";
+import DocumentNode from "./DocumentNode";
 import CustomNode from "../nodes/customNode";
+import ConditionerNode from "./ConditionerNode";
+import ReminderNode from "./ReminderNode";
 
 const nodeTypes = {
-    CustomNode: CustomNode,
-    IdeaNode: IdeaNode,
+    CUSTOM_NODE: CustomNode,
+    IDEA_NODE: IdeaNode,
+    KNOWLEDGE: KnowledgeNode,
+    DOCUMENT: DocumentNode,
+    CONDITION:ConditionerNode,
+    REMINDER:ReminderNode
   };
 
 
-export { CustomNode, IdeaNode,nodeTypes}
+export { KnowledgeNode,DocumentNode,CustomNode, IdeaNode,nodeTypes}

@@ -6,7 +6,7 @@
 
 path.react-flow__edge-path {
   stroke-width: 10;
-  stroke: green;
+  stroke: rgba(51, 42, 33, 0.953);
 }
 
 path.react-flow__edge-path:hover {

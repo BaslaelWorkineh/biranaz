@@ -17,9 +17,19 @@ import { FaCopy, FaEdit } from 'react-icons/fa';
 import { NodeDrawer } from '../nodeDrawer';
 import Drawer from 'react-modern-drawer'
 
-//import styles 👇
+//styles 👇
 import 'react-modern-drawer/dist/index.css'
 import { nodeModalContext } from 'base/contexts/nodeModalContextProvider';
+
+
+/**
+ * TODO: This Document node will consist of the following
+ * Input File(for now it will only support txt,csv,excel,pdf,and docx)
+ * File label and description
+ * parts of the file that should be exposed (for csv and excel files, where the user decides the attributes to be exposed)
+ * output handle used to expose data from the file to other nodes
+ */
+
 
 const style = {
   padding: 10,
@@ -42,7 +52,7 @@ const DocumentNode = (node: NodeProps) => {
   <>
   
        
-    <Card onClick={handleClick} className={` flex flex-col gap-6 justify-center items-center min-w-fit min-h-fit max-h-[40rem] ${data.label>5? 'bg-[#e0c17f]':'bg-[rgb(242,243,216)]'}  text-gray-900 font-bold text-sm p-24 rounded-[15px] shadow-lg shadow-[rgba(30,30,30,1)] border-2 border-brown-600`}>
+    <Card onDoubleClick={handleClick} className={` flex flex-col gap-6 justify-center items-center min-w-fit min-h-fit max-h-[40rem] ${data.label>5? 'bg-[#e0c17f]':'bg-[rgb(242,243,216)]'}  text-gray-900 font-bold text-sm p-24 rounded-[15px] shadow-lg shadow-[rgba(30,30,30,1)] border-2 border-brown-600`}>
     
             
       <NodeResizeControl minHeight={250} minWidth={400}>

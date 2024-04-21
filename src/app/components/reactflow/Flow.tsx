@@ -252,7 +252,7 @@ function Flow() {
           rgba: color,
           toolbarPosition: Position.Bottom,
         },
-        type: "IdeaNode",
+        type: "DOCUMENT",
       });
     }
     return newNodes;

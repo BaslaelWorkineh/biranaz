@@ -76,7 +76,7 @@ export function NodeSelectorBar() {
   const [openNav, setOpenNav] = React.useState(false);
 
   const onDragStart = (event: any, nodeType: any) => {
-    event.dataTransfer.setData("reactflow-node", nodeType);
+    event.dataTransfer.setData("reactflow-node", nodeType as string);
     event.dataTransfer.effectAllowed = "move";
   };
 
@@ -118,7 +118,7 @@ export function NodeSelectorBar() {
               // onDragCapture={(event)=>onDragStart(event,'IdeaNode')}
               variant="small"
               color="red"
-              onDragStart={(event) => onDragStart(event, "IdeaNode")}
+              onDragStart={(event) => onDragStart(event, item.type as string)}
               className="flex justify-center items-center gap-2 bg-stone-800 rounded-[8px] text-stone-200 font-semibold cursor-auto "
               draggable
             >

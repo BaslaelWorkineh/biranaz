@@ -1,5 +1,11 @@
-import React, { memo, useContext, useEffect } from 'react';
-import { Handle, NodeProps, NodeResizeControl, NodeToolbar, Position } from 'reactflow';
+import React, { memo, useContext, useEffect } from "react";
+import {
+  Handle,
+  NodeProps,
+  NodeResizeControl,
+  NodeToolbar,
+  Position,
+} from "reactflow";
 
 import {
   Card,
@@ -13,183 +19,168 @@ import {
 } from "@material-tailwind/react";
 
 import { CgEditUnmask } from "react-icons/cg";
-import { FaCopy, FaEdit } from 'react-icons/fa';
-import { NodeDrawer } from '../nodeDrawer';
-import Drawer from 'react-modern-drawer'
+import { FaCopy, FaEdit } from "react-icons/fa";
+import { NodeDrawer } from "../nodeDrawer";
+import Drawer from "react-modern-drawer";
 
 //import styles 👇
-import 'react-modern-drawer/dist/index.css'
-import { nodeModalContext } from 'base/contexts/nodeModalContextProvider';
+import "react-modern-drawer/dist/index.css";
+import { nodeModalContext } from "base/contexts/nodeModalContextProvider";
 
 const style = {
   padding: 10,
-  background: '#fff',
-  border: '1px solid #ddd',
+  background: "#fff",
+  border: "1px solid #ddd",
 };
 
 const ReminderNode = (node: NodeProps) => {
-  const {data }  = node
-  const context = useContext(nodeModalContext)
-      
-  const handleClick = ()=>{
+  const { data } = node;
+  const context = useContext(nodeModalContext);
+
+  const handleClick = () => {
     // node.data.label = "Node number"+node.xPos
-    context?.setNode(node)
-    context?.setIsOpen(true)
+    context?.setNode(node);
+    context?.setIsOpen(true);
+  };
 
-  }
-
-  return(
-  <>
-  
-       
-    <Card onClick={handleClick} className={` flex flex-col gap-6 justify-center items-center min-w-fit min-h-fit max-h-[40rem] ${data.label>5? 'bg-[#e0c17f]':'bg-[rgb(242,243,216)]'}  text-gray-900 font-bold text-sm p-24 rounded-[15px] shadow-lg shadow-[rgba(30,30,30,1)] border-2 border-brown-600`}>
-    
-            
-      <NodeResizeControl minHeight={250} minWidth={400}>
-              <div className="rounded-full p-2 bg-stone-800 text-sm font-semibold h-2 w-2 "></div>
-            </NodeResizeControl>
-            <NodeToolbar isVisible={true} position={data.toolbarPosition} className={`flex ${([Position.Left,Position.Right].includes(data.toolbarPosition))?'flex-col text-[2px]':'flex-row'} gap-4 ${Math.random() >0?'bg-[#394738]':'bg-[#245f20]'} rounded-[5px] text-stone-300 text-sm px-2`}>
-                <button className='p-1'><FaEdit/></button>             
-                <button className='p-1'><FaCopy/></button>
-              {/* <button>expand</button> */}
-            </NodeToolbar>
-      <CardHeader  color="blue-gray" className='min-h-fit'>
-            <Typography variant="h1" color="black" className="font-bold">
-              {data.label }
-            </Typography>
-      </CardHeader>
-      <CardBody color='rgba(30,30,30,1)'>
-        <div className="mb-3 flex items-center justify-between">
-          <Typography variant="h5" color="blue-gray" className="font-medium">
-           {data.label }
-          </Typography>
-          <Typography
-            color="blue-gray"
-            className="flex items-center gap-1.5 font-normal"
-          >
+  return (
+    <>
+      <div className="relative group overflow-hidden p-8 rounded-xl bg-white border border-gray-200 dark:border-gray-800 dark:bg-gray-900">
+        <div
+          aria-hidden="true"
+          className="inset-0 absolute aspect-video border rounded-full -translate-y-1/2 group-hover:-translate-y-1/4 duration-300 bg-gradient-to-b from-red-500 to-white dark:from-white dark:to-white blur-2xl opacity-25 dark:opacity-5 dark:group-hover:opacity-10"
+        ></div>
+        <div className="relative">
+          <div className="border border-red-500/10 flex relative *:relative *:size-6 *:m-auto size-12 rounded-lg dark:bg-gray-900 dark:border-white/15 before:rounded-[7px] before:absolute before:inset-0 before:border-t before:border-white before:from-red-100 dark:before:border-white/20 before:bg-gradient-to-b dark:before:from-white/10 dark:before:to-transparent before:shadow dark:before:shadow-gray-950">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="-mt-0.5 h-5 w-5 text-yellow-700"
+              width="0.95em"
+              height="1em"
+              viewBox="0 0 256 271"
             >
+              <defs>
+                <linearGradient
+                  id="logosAngularIcon0"
+                  x1="25.071%"
+                  x2="96.132%"
+                  y1="90.929%"
+                  y2="55.184%"
+                >
+                  <stop offset="0%" stop-color="#e40035"></stop>
+                  <stop offset="24%" stop-color="#f60a48"></stop>
+                  <stop offset="35.2%" stop-color="#f20755"></stop>
+                  <stop offset="49.4%" stop-color="#dc087d"></stop>
+                  <stop offset="74.5%" stop-color="#9717e7"></stop>
+                  <stop offset="100%" stop-color="#6c00f5"></stop>
+                </linearGradient>
+                <linearGradient
+                  id="logosAngularIcon1"
+                  x1="21.863%"
+                  x2="68.367%"
+                  y1="12.058%"
+                  y2="68.21%"
+                >
+                  <stop offset="0%" stop-color="#ff31d9"></stop>
+                  <stop
+                    offset="100%"
+                    stop-color="#ff5be1"
+                    stop-opacity="0"
+                  ></stop>
+                </linearGradient>
+              </defs>
               <path
-                fillRule="evenodd"
-                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                clipRule="evenodd"
-              />
+                fill="url(#logosAngularIcon0)"
+                d="m256 45.179l-9.244 145.158L158.373 0zm-61.217 187.697l-66.782 38.105l-66.784-38.105L74.8 199.958h106.4zM128.001 72.249l34.994 85.076h-69.99zM9.149 190.337L0 45.179L97.627 0z"
+              ></path>
+              <path
+                fill="url(#logosAngularIcon1)"
+                d="m256 45.179l-9.244 145.158L158.373 0zm-61.217 187.697l-66.782 38.105l-66.784-38.105L74.8 199.958h106.4zM128.001 72.249l34.994 85.076h-69.99zM9.149 190.337L0 45.179L97.627 0z"
+              ></path>
             </svg>
-            5.0
-          </Typography>
-        </div>
-        <Typography color="black">
-          Enter a freshly updated and thoughtfully furnished peaceful home
-          surrounded by ancient trees, stone walls, and open meadows.
-        </Typography>
-        <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
-          <Tooltip content="$129 per night">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-5 w-5"
-              >
-                <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z" />
-                <path
-                  fillRule="evenodd"
-                  d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z"
-                  clipRule="evenodd"
-                />
-                <path d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z" />
-              </svg>
-            </span>
-          </Tooltip>
-          <Tooltip content="Free wifi">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M1.371 8.143c5.858-5.857 15.356-5.857 21.213 0a.75.75 0 010 1.061l-.53.53a.75.75 0 01-1.06 0c-4.98-4.979-13.053-4.979-18.032 0a.75.75 0 01-1.06 0l-.53-.53a.75.75 0 010-1.06zm3.182 3.182c4.1-4.1 10.749-4.1 14.85 0a.75.75 0 010 1.061l-.53.53a.75.75 0 01-1.062 0 8.25 8.25 0 00-11.667 0 .75.75 0 01-1.06 0l-.53-.53a.75.75 0 010-1.06zm3.204 3.182a6 6 0 018.486 0 .75.75 0 010 1.061l-.53.53a.75.75 0 01-1.061 0 3.75 3.75 0 00-5.304 0 .75.75 0 01-1.06 0l-.53-.53a.75.75 0 010-1.06zm3.182 3.182a1.5 1.5 0 012.122 0 .75.75 0 010 1.061l-.53.53a.75.75 0 01-1.061 0l-.53-.53a.75.75 0 010-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-          </Tooltip>
-          <Tooltip content="2 bedrooms">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-5 w-5"
-              >
-                <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
-                <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
-              </svg>
-            </span>
-          </Tooltip>
-          <Tooltip content={`65" HDTV`}>
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-5 w-5"
-              >
-                <path d="M19.5 6h-15v9h15V6z" />
-                <path
-                  fillRule="evenodd"
-                  d="M3.375 3C2.339 3 1.5 3.84 1.5 4.875v11.25C1.5 17.16 2.34 18 3.375 18H9.75v1.5H6A.75.75 0 006 21h12a.75.75 0 000-1.5h-3.75V18h6.375c1.035 0 1.875-.84 1.875-1.875V4.875C22.5 3.839 21.66 3 20.625 3H3.375zm0 13.5h17.25a.375.375 0 00.375-.375V4.875a.375.375 0 00-.375-.375H3.375A.375.375 0 003 4.875v11.25c0 .207.168.375.375.375z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-          </Tooltip>
-          <Tooltip content="Fire alert">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-          </Tooltip>
-          <Tooltip content="And +20 more">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-brown-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-brown-900/10 hover:!opacity-100 group-hover:opacity-70">
-              +20
-            </span>
-          </Tooltip>
-        </div>
-      </CardBody>
-      <CardFooter className="pt-3">
-        
-        <Button size="lg" fullWidth={true}>
-          Reserve
-        </Button>
-      </CardFooter>
-      <Handle style={{minWidth:'5%',minHeight:'30%',maxWidth:'12%',maxHeight:'15%',left:"-3%",borderRadius:'4px'}} className='hover:bg-brown-600 transition-all duration-500' type="target" position={Position.Left} id="left" />
-          {`bg-[${data?.rgba}]`}
-          <Handle style={{minWidth:'5%',minHeight:'30%',maxWidth:'12%',maxHeight:'15%',right:"-3%",borderRadius:'4px'}} type="source" position={Position.Right} className='hover:bg-brown-600 transition-all duration-500' id="right" />
-    </Card>
-  </> 
-        
+          </div>
 
-    
-  
-
+          <div className="mt-6 pb-6 rounded-b-[--card-border-radius]">
+            <p className="text-gray-700 dark:text-gray-300">
+              Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit,
+              sapiente.
+            </p>
+          </div>
+          <div className="flex gap-3 -mb-8 py-4 border-t border-gray-200 dark:border-gray-800">
+            <a
+              href="#"
+              download="/"
+              className="group rounded-xl disabled:border *:select-none [&>*:not(.sr-only)]:relative *:disabled:opacity-20 disabled:text-gray-950 disabled:border-gray-200 disabled:bg-gray-100 dark:disabled:border-gray-800/50 disabled:dark:bg-gray-900 dark:*:disabled:!text-white text-gray-950 bg-gray-100 hover:bg-gray-200/75 active:bg-gray-100 dark:text-white dark:bg-gray-500/10 dark:hover:bg-gray-500/15 dark:active:bg-gray-500/10 flex gap-1.5 items-center text-sm h-8 px-3.5 justify-center"
+            >
+              <span>Download</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1em"
+                height="1em"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m17 13l-5 5m0 0l-5-5m5 5V6"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href="#"
+              className="group flex items-center rounded-xl disabled:border *:select-none [&>*:not(.sr-only)]:relative *:disabled:opacity-20 disabled:text-gray-950 disabled:border-gray-200 disabled:bg-gray-100 dark:disabled:border-gray-800/50 disabled:dark:bg-gray-900 dark:*:disabled:!text-white text-gray-950 bg-gray-100 hover:bg-gray-200/75 active:bg-gray-100 dark:text-white dark:bg-gray-500/10 dark:hover:bg-gray-500/15 dark:active:bg-gray-500/10 size-8 justify-center"
+            >
+              <span className="sr-only">Source Code</span>
+              <svg
+                className="size-5"
+                xmlns="http://www.w3.org/2000/svg"
+                width="1em"
+                height="1em"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33c.85 0 1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <Handle
+          style={{
+            minWidth: "4%",
+            minHeight: "40%",
+            maxWidth: "12%",
+            maxHeight: "15%",
+            left: "-1.5%",
+            borderRadius: "15px",
+            backgroundColor: "#968b6e",
+          }}
+          className="hover:bg-brown-600 bg-[#968b6e] transition-all duration-500"
+          type="target"
+          position={Position.Left}
+          id="left"
+        />
+        {`bg-[${data?.rgba}]`}
+        <Handle
+          style={{
+            minWidth: "4%",
+            minHeight: "40%",
+            maxWidth: "12%",
+            maxHeight: "15%",
+            right: "-1.5%",
+            borderRadius: "15px",
+            backgroundColor: "#968b6e",
+          }}
+          type="source"
+          position={Position.Right}
+          className="hover:bg-brown-600 bg-green-500 transition-all duration-500"
+          id="right"
+        />
+      </div>
+    </>
   );
 };
 
