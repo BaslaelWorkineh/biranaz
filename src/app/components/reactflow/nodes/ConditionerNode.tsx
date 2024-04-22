@@ -26,6 +26,7 @@ import Drawer from "react-modern-drawer";
 //import styles 👇
 import "react-modern-drawer/dist/index.css";
 import { nodeModalContext } from "base/contexts/nodeModalContextProvider";
+import { ConditinalNodeData } from "base/types/node";
 
 const style = {
   padding: 10,
@@ -44,7 +45,7 @@ const style = {
   //TODO: we have to check whether every input to the node can be evaluated as a boolean or not.
  */
 const ConditionerNode = (node: NodeProps) => {
-  const { data } = node;
+  const { data }: { data: ConditinalNodeData } = node;
   const context = useContext(nodeModalContext);
 
   const handleClick = () => {
@@ -55,7 +56,10 @@ const ConditionerNode = (node: NodeProps) => {
 
   return (
     <>
-      <Card className="relative rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 max-w-[40rem]">
+      <Card
+        onDoubleClick={handleClick}
+        className="relative rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 max-w-[40rem]"
+      >
         <div className="flex flex-wrap items-start sm:gap-8">
           <div
             className="hidden sm:grid sm:size-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-indigo-500"
@@ -71,9 +75,9 @@ const ConditionerNode = (node: NodeProps) => {
           </div>
 
           <div>
-            <strong className="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
-              Episode #101
-            </strong>
+            <Typography variant="h5" color="blue-gray" className="font-medium">
+              {data.value}
+            </Typography>
 
             <h3 className="mt-4 text-lg font-medium sm:text-xl">
               <a href="#" className="hover:underline">
@@ -126,6 +130,7 @@ const ConditionerNode = (node: NodeProps) => {
                 <a href="#" className="underline hover:text-gray-700">
                   August
                 </a>
+                <input type="text" name="value" id="value" />
               </p>
             </div>
           </div>
@@ -145,7 +150,7 @@ const ConditionerNode = (node: NodeProps) => {
           position={Position.Left}
           id="left"
         />
-        {`bg-[${data?.rgba}]`}
+
         <Handle
           style={{
             minWidth: "3%",

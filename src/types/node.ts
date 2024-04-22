@@ -6,21 +6,20 @@ type LOGICAL_CONNECTOR = 'AND' | 'OR' | 'NOT' ;
 type DOCUMENT_TYPE = 'pdf' | 'doc' | 'xls' | 'ppt' | 'txt' ;
 
 
-export type ConditinalNodeType  = NodeProps & {
-    data:{
+export type ConditinalNodeData  = {
         label:string
         connector:LOGICAL_CONNECTOR
         eventName:string
         eventTrigger:()=>any
+        value:any
         output:boolean
         description:string
 
     }
-}
 
 
-export type  DocumentNode = NodeProps & {
-    data:{
+
+export type  DocumentNodeData = {
         label:string
         description:string
         exposable:any[]
@@ -30,11 +29,10 @@ export type  DocumentNode = NodeProps & {
         documentTitle:string;
         output:any //this will be used to output any exposable data
         thumbnailUrl:string
-    }
+    
 }
 
-export type KnowledgeType = NodeProps & {
-    data:{
+export type KnowledgeNodeData ={
         label:string 
         description:string
         thumbnailUrl:string
@@ -42,11 +40,10 @@ export type KnowledgeType = NodeProps & {
         facts:string[]
         ideas:string[]
     }
-}
 
 
-export type ScheduleNodeType = NodeProps & {
-    data:{
+
+export type ScheduleNodeType ={
         label:string
         description:string
         scheduleDate:Date
@@ -57,7 +54,7 @@ export type ScheduleNodeType = NodeProps & {
         eventTrigger:()=>any
 
     }
-}
+ 
 
 //this is just behasab dereja 
 export type IdeaNodeType = NodeProps & {
