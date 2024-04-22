@@ -24,7 +24,6 @@ import Image from "next/image";
 //import styles 👇
 import "react-modern-drawer/dist/index.css";
 import { nodeModalContext } from "base/contexts/nodeModalContextProvider";
-import { ConditinalNodeType } from "base/types/node";
 
 const style = {
   padding: 10,
@@ -32,7 +31,7 @@ const style = {
   border: "1px solid #ddd",
 };
 
-const BiDirectionalNode = (node: ConditinalNodeType) => {
+const BiDirectionalNode = (node: NodeProps) => {
   const { data } = node;
   const context = useContext(nodeModalContext);
 
