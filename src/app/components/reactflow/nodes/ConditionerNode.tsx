@@ -1,10 +1,12 @@
-import React, { memo, useContext, useEffect } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import {
   Handle,
+  Node,
   NodeProps,
   NodeResizeControl,
   NodeToolbar,
   Position,
+  getIncomers,
 } from "reactflow";
 
 import {
@@ -27,6 +29,8 @@ import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import { nodeModalContext } from "base/contexts/nodeModalContextProvider";
 import { ConditinalNodeData } from "base/types/node";
+import { useShallow } from "zustand/react/shallow";
+import useStore, { selector } from "base/contexts/store";
 
 const style = {
   padding: 10,
@@ -47,12 +51,38 @@ const style = {
 const ConditionerNode = (node: NodeProps) => {
   const { data }: { data: ConditinalNodeData } = node;
   const context = useContext(nodeModalContext);
+  const [incomimgNodes, setIncomingNodes] = useState<Node[]>([]);
+  const { nodes, edges, getNode } = useStore(useShallow(selector));
+  const currentNode = getNode(node.id as string) as Node;
+
+  useEffect(() => {
+    const incomers: Node[] = getIncomers(currentNode, nodes, edges);
+    setIncomingNodes(incomers);
+  }, [currentNode, edges, node, nodes]);
+
+
+  useEffect(()=>{
+
+      const calculateLogic =()=>{
+        let outputValue:any=false;
+        incomimgNodes.forEach((incomingNode)=>{
+          outputValue = outputValue || incomingNode.data.value as boolean
+        })
+    
+        node.data.output = outputValue
+      }
+
+      calculateLogic()
+  },[incomimgNodes])
 
   const handleClick = () => {
     // node.data.label = "Node number"+node.xPos
     context?.setNode(node);
     context?.setIsOpen(true);
   };
+
+
+
 
   return (
     <>
@@ -76,13 +106,16 @@ const ConditionerNode = (node: NodeProps) => {
 
           <div>
             <Typography variant="h5" color="blue-gray" className="font-medium">
-              {data.value}
+              data value : {data.output?"this is true":"this is false"}
             </Typography>
+            <pre className="w-full flex flex-wrap text text-wrap">
+              {JSON.stringify(incomimgNodes, null, 2)}
+            </pre>
 
             <h3 className="mt-4 text-lg font-medium sm:text-xl">
               <a href="#" className="hover:underline">
                 {" "}
-                Some Interesting Podcast Title{" "}
+                current value: {currentNode.data.value ? "true" : "false"}
               </a>
             </h3>
 

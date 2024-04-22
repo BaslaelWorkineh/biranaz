@@ -38,6 +38,10 @@ export default function NodeDrawer() {
       changeNodeData({id:currentNode.id,data:currentNode.data,selected:currentNode.selected} as NodeProps)
       
   }
+
+  
+
+
   
  
   return (
@@ -74,7 +78,7 @@ export default function NodeDrawer() {
             Your Email
           </Typography>
           <Input name='label' value={currentNode?.data?.label} onChange={handleChange} type="label" label="label" crossOrigin={undefined} />
-          <Input label="value" name="value" value={currentNode?.data?.value} onChange={handleChange} crossOrigin={undefined} />
+          <Input type='number' label="value" name="value" value={currentNode?.data?.value} onChange={handleChange} crossOrigin={undefined} />
           <Textarea rows={6} label="Message" />
           <Button>Send Message</Button>
         </form>
