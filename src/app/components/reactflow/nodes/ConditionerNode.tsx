@@ -52,7 +52,7 @@ const ConditionerNode = (node: NodeProps) => {
   const { data }: { data: ConditinalNodeData } = node;
   const context = useContext(nodeModalContext);
   const [incomimgNodes, setIncomingNodes] = useState<Node[]>([]);
-  const { nodes, edges, getNode } = useStore(useShallow(selector));
+  const { nodes, edges, getNode } = useRFs(useShallow(selector));
   const currentNode = getNode(node.id as string) as Node;
 
   useEffect(() => {
@@ -61,19 +61,19 @@ const ConditionerNode = (node: NodeProps) => {
   }, [currentNode, edges, node, nodes]);
 
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-      const calculateLogic =()=>{
-        let outputValue:any=false;
-        incomimgNodes.forEach((incomingNode)=>{
-          outputValue = outputValue || incomingNode.data.value as boolean
-        })
+  //     const calculateLogic =()=>{
+  //       let outputValue:any=false;
+  //       incomimgNodes.forEach((incomingNode)=>{
+  //         outputValue = outputValue || incomingNode.data.value as boolean
+  //       })
     
-        node.data.output = outputValue
-      }
+  //       node.data.output = outputValue
+  //     }
 
-      calculateLogic()
-  },[incomimgNodes])
+  //     calculateLogic()
+  // },[incomimgNodes])
 
   const handleClick = () => {
     // node.data.label = "Node number"+node.xPos
