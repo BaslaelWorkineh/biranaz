@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect, useState } from "react";
+import React, { memo, useCallback, useContext, useEffect, useState } from "react";
 import {
   Handle,
   Node,
@@ -27,10 +27,11 @@ import Drawer from "react-modern-drawer";
 
 //import styles 👇
 import "react-modern-drawer/dist/index.css";
-import { nodeModalContext } from "base/contexts/nodeModalContextProvider";
 import { ConditinalNodeData } from "base/types/node";
+import { NodeModalSelector, RFSelector, useNodeModalStore, useRFStore } from "base/contexts/store";
 import { useShallow } from "zustand/react/shallow";
-import useStore, { selector } from "base/contexts/store";
+
+
 
 const style = {
   padding: 10,
@@ -49,39 +50,52 @@ const style = {
   //TODO: we have to check whether every input to the node can be evaluated as a boolean or not.
  */
 const ConditionerNode = (node: NodeProps) => {
-  const { data }: { data: ConditinalNodeData } = node;
-  const context = useContext(nodeModalContext);
-  const [incomimgNodes, setIncomingNodes] = useState<Node[]>([]);
-  const { nodes, edges, getNode } = useStore(useShallow(selector));
-  const currentNode = getNode(node.id as string) as Node;
 
-  useEffect(() => {
-    const incomers: Node[] = getIncomers(currentNode, nodes, edges);
-    setIncomingNodes(incomers);
-  }, [currentNode, edges, node, nodes]);
+  const [incomingNodes,setIncomingNodes]  = useState<Node[]>([])
+
+  const {isModalOpen,setIsModalOpen}  = useNodeModalStore(useShallow(NodeModalSelector))
+  const {currentNode,setCurrentNode,nodes,edges,changeNodeData,getNode}  = useRFStore(useShallow(RFSelector))
+
+
+
+  const handleClick = ()=>{
+    setCurrentNode({
+      ...node,
+      position: {x:node.xPos,y:node.yPos}
+    })
+      setIsModalOpen(true)
+  }
+
+  const areEqual  = (nodes1:Node[],nodes2:Node[])=>{
+    if(nodes1.length !== nodes2.length){
+      return false
+    }
+    for(let i = 0; i < nodes1.length; i++){
+      if(nodes1[i].id !== nodes2[i].id || JSON.stringify(nodes1[i].data) !== JSON.stringify(nodes2[i].data)){
+        return false
+      }
+      
+    }
+    return true
+  }
+
 
 
   useEffect(()=>{
-
-      const calculateLogic =()=>{
-        let outputValue:any=false;
-        incomimgNodes.forEach((incomingNode)=>{
-          outputValue = outputValue || incomingNode.data.value as boolean
-        })
+    const gotNode  = getNode(node.id)
+    const incomers = getIncomers(gotNode,nodes,edges)
+    //check if incomers is the same as the current incomingNodes
     
-        node.data.output = outputValue
-      }
+    if(areEqual(incomingNodes,incomers)){
+      // alert("incomers === "+JSON.stringify(incomers))
+      // console.log("the incomers is the different from the current incomingNodes")
+      setIncomingNodes(incomers)
+    }
+    else{
+      console.log("the incomers is the same as the current incomingNodes")
+    }
 
-      calculateLogic()
-  },[incomimgNodes])
-
-  const handleClick = () => {
-    // node.data.label = "Node number"+node.xPos
-    context?.setNode(node);
-    context?.setIsOpen(true);
-  };
-
-
+  },[nodes, edges, currentNode, incomingNodes, getNode, node.id, setIncomingNodes])
 
 
   return (
@@ -106,16 +120,17 @@ const ConditionerNode = (node: NodeProps) => {
 
           <div>
             <Typography variant="h5" color="blue-gray" className="font-medium">
-              data value : {data.output?"this is true":"this is false"}
+              {/* data value : {currentNode.data.output?"this is true":"this is false"} */}
+              data value none for now
             </Typography>
             <pre className="w-full flex flex-wrap text text-wrap">
-              {JSON.stringify(incomimgNodes, null, 2)}
+              {JSON.stringify(incomingNodes, null, 2)}
             </pre>
 
             <h3 className="mt-4 text-lg font-medium sm:text-xl">
               <a href="#" className="hover:underline">
                 {" "}
-                current value: {currentNode.data.value ? "true" : "false"}
+                {/* current value: {currentNode.data.value ? "true" : "false"} */}
               </a>
             </h3>
 

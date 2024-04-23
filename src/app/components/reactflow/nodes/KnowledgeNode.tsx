@@ -20,7 +20,7 @@ import Drawer from 'react-modern-drawer'
 //import styles 👇
 import 'react-modern-drawer/dist/index.css'
 import { nodeModalContext } from 'base/contexts/nodeModalContextProvider';
-import { KnowledgeType } from 'base/types/node';
+
 
 /**
  * TODO: This Is a Knowledge node which includes the following
@@ -35,7 +35,7 @@ const style = {
   border: '1px solid #ddd',
 };
 
-const KnowledgeNode = (node: KnowledgeType) => {
+const KnowledgeNode = (node: NodeProps) => {
   const {data }  = node
   const context = useContext(nodeModalContext)
       
