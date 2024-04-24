@@ -1,5 +1,5 @@
 import React from 'react';
-import { getBezierPath, BaseEdge, useStore, EdgeProps, ReactFlowState } from 'reactflow';
+import { getBezierPath, BaseEdge, useRFStore, EdgeProps, ReactFlowState } from 'reactflow';
 
 export type GetSpecialPathParams = {
   sourceX: number;
@@ -29,7 +29,7 @@ export default function BiEdge({
   targetPosition,
   markerEnd,
 }: EdgeProps) {
-  const isBiDirectionEdge = useStore((s: ReactFlowState) => {
+  const isBiDirectionEdge = useRFStore((s: ReactFlowState) => {
     const edgeExists = s.edges.some(
       (e) =>
         (e.source === target && e.target === source) || (e.target === source && e.source === target)

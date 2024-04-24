@@ -30,17 +30,17 @@ import {
   Cog8ToothIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import useStore from "base/contexts/store";
+
 import { useShallow } from "zustand/react/shallow";
-import { selector } from "base/contexts/store";
+
 import { useQuery } from "@tanstack/react-query";
 import { cn, getDomain } from "base/lib/utils";
 import { DiagramWithWorkspaceWithCreator } from "base/types/dbTypes";
 import { useParams } from "next/navigation";
 import { DiagramBreadCrumb } from "../DiagramBreadCrumb";
 import Loader from "../Loader";
-import {nodeTypes} from 'base/app/components/reactflow/nodes/index'
-
+import { nodeTypes } from "base/app/components/reactflow/nodes/index";
+import { RFSelector, useRFStore } from "base/contexts/store";
 
 const edgeTypes = {
   bidirectional: BiEdge,
@@ -119,10 +119,31 @@ function Flow() {
     isRecordable,
     isUndoable,
     isRedoable,
-  } = useStore(useShallow(selector));
+  } = useRFStore(useShallow(RFSelector));
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance>();
   const [mapOpen, setMapOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Check if the Ctrl (or Cmd) key is pressed along with Z for undo (Cmd+Z for Mac)
+      if ((event.ctrlKey || event.metaKey) && event.key === "z") {
+        event.preventDefault(); // Prevent browser default behavior (e.g., undoing text)
+        undo();
+      }
+      // Check if the Ctrl (or Cmd) key is pressed along with Shift and Z for redo (Cmd+Shift+Z for Mac)
+      else if (
+        (event.ctrlKey || event.metaKey) &&        
+        event.key === "y"
+      ) {
+        event.preventDefault(); // Prevent browser default behavior (e.g., redoing text)
+        redo();
+      }
+    };
+    addEventListener("keydown", handleKeyDown);
+
+    return ()=>removeEventListener('keydown',handleKeyDown);
+  }, [redo, undo]);
 
   // useEffect(() => {
   //   const initialNodes = localStorage.getItem("information")
@@ -208,7 +229,7 @@ function Flow() {
 
       addNode(newNode);
     },
-    [reactFlowInstance]
+    [addNode, reactFlowInstance]
   );
 
   const onDragStart = (event: any, nodeType: any) => {
@@ -281,9 +302,12 @@ function Flow() {
   return (
     <div className="relative h-screen">
       <div className="absolute bottom-2 right-2 z-40 ">
-      <Button onClick={()=>setMapOpen(!mapOpen)} className="minimap-toogle p-2 rounded-lg bg-brown-500 drop-shadow-sm hover:bg-brown-400 cursor-pointer transition-all duration-500 z-40">
-        <FaMap />
-      </Button>
+        <Button
+          onClick={() => setMapOpen(!mapOpen)}
+          className="minimap-toogle p-2 rounded-lg bg-brown-500 drop-shadow-sm hover:bg-brown-400 cursor-pointer transition-all duration-500 z-40"
+        >
+          <FaMap />
+        </Button>
       </div>
       <div className="header absolute  flex gap-2 justify-between items-center py-1 w-full z-50 bg-white">
         <DiagramBreadCrumb
@@ -307,7 +331,7 @@ function Flow() {
           </Button>
         </ButtonGroup>
       </div>
-      
+
       <Loader isVisible={diagramLoading} />
       {/* <small className="absolute right-0 top-0 px-3 py-1 rounded-bl-[10px] bg-brown-900 text-white text-xs z-50">
         verson 1.0
@@ -337,10 +361,10 @@ function Flow() {
         {/* <Panel position={"bottom-right"}>
           
         </Panel> */}
-
+        {/* bg-[#371e13b5] */}
         <Background
-          className="bg-[#5e301d2c]"
-          color={"#3097ff"}
+          className="bg-[#7533172c] "
+          color={"#371e13b5"}
           variant={BackgroundVariant.Lines}
           lineWidth={0.09}
           gap={40}
@@ -355,13 +379,13 @@ function Flow() {
             </Button>
 
             {
-            <Button
-              onClick={undo}
-              disabled={!isUndoable}
-              className="bg-brown-400 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full disabled:grayscale rounded-none transition-all duration-500"
-            >
-              <FaUndo />
-            </Button>
+              <Button
+                onClick={undo}
+                disabled={!isUndoable}
+                className="bg-brown-400 text-stone-200 text-sm font-semibold p-1.5 cursor-pointer w-full h-full disabled:grayscale rounded-none transition-all duration-500"
+              >
+                <FaUndo />
+              </Button>
             }
 
             <Button
@@ -388,7 +412,7 @@ function Flow() {
             </div> */}
           </div>
         </Controls>
-        {mapOpen&&(
+        {mapOpen && (
           <MiniMap
             className="bg-[#3b190b81]"
             maskColor="#4b291b4a"
