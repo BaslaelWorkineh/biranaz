@@ -51,15 +51,57 @@ const style = {
  */
 const ConditionerNode = (node: NodeProps) => {
   const { data }: { data: ConditinalNodeData } = node;
-  const context = useContext(nodeModalContext);
   const [incomimgNodes, setIncomingNodes] = useState<Node[]>([]);
-  const { nodes, edges, getNode } = useStore(useShallow(selector));
-  const currentNode = getNode(node.id as string) as Node;
+  const { nodes, edges, getNode,currentNode,setCurrentNode } = useRFStore(useShallow(RFSelector));
+  const { isModalOpen,setIsModalOpen } = useNodeModalStore(useShallow(NodeModalSelector));
+
+  const selectedNode = getNode(node.id as string) as Node;
+  const isEqual = (nodes1: Node[], nodes2: Node[]): boolean => {
+    // Check if the two node lists are equal or not
+    if (nodes1.length !== nodes2.length) {
+      return false;
+    }
+  
+    // Sort the arrays by node id
+    const sortedNodes1 = [...nodes1].sort((a, b) => a.id.localeCompare(b.id));
+    const sortedNodes2 = [...nodes2].sort((a, b) => a.id.localeCompare(b.id));
+  
+    // Compare each node in the sorted arrays
+    for (let i = 0; i < sortedNodes1.length; i++) {
+      const node1 = sortedNodes1[i];
+      const node2 = sortedNodes2[i];
+  
+      // Check if the node ids are equal
+      if (node1.id !== node2.id) {
+        return false;
+      }
+  
+      // Check if the node data is equal
+      if (JSON.stringify(node1.data) !== JSON.stringify(node2.data)) {
+        return false;
+      }
+    }
+  
+    return true;
+  };
+  
 
   useEffect(() => {
-    const incomers: Node[] = getIncomers(currentNode, nodes, edges);
-    setIncomingNodes(incomers);
-  }, [currentNode, edges, node, nodes]);
+    const incomers: Node[] = getIncomers(selectedNode, nodes, edges);
+    if(incomimgNodes && !isEqual(incomers,incomimgNodes)){
+      console.log("incomers not the same")
+      setIncomingNodes(incomers);
+    }
+    else{
+      console.log("incomers are the same")
+    }
+    // console.log("check",isEqual(incomers,incomimgNodes),incomers,incomimgNodes)
+    // setIncomingNodes(incomers);
+    // if(!isEqual(incomers,incomimgNodes)){
+    //   alert("is not the same")
+    // }
+    
+  }, [currentNode, edges, incomimgNodes, node, nodes, selectedNode]);
 
 
   useEffect(()=>{
@@ -70,16 +112,23 @@ const ConditionerNode = (node: NodeProps) => {
           outputValue = outputValue || incomingNode.data.value as boolean
         })
     
-        node.data.output = outputValue
+        currentNode.data.output = outputValue
       }
 
       calculateLogic()
-  },[incomimgNodes])
+  },[incomimgNodes, currentNode.data])
 
   const handleClick = () => {
     // node.data.label = "Node number"+node.xPos
-    context?.setNode(node);
-    context?.setIsOpen(true);
+    setCurrentNode({
+      ...node,
+      position:{
+        x:node.xPos,
+        y:node.yPos
+      }
+    })
+    setIsModalOpen(true)
+    
   };
 
 
@@ -107,17 +156,17 @@ const ConditionerNode = (node: NodeProps) => {
 
           <div>
             <Typography variant="h5" color="blue-gray" className="font-medium">
-              {/* data value : {currentNode.data.output?"this is true":"this is false"} */}
-              data value none for now
+               data value : {currentNode.data.output?"this is true":"this is false"} 
+              
             </Typography>
             <pre className="w-full flex flex-wrap text text-wrap">
-              {JSON.stringify(incomingNodes, null, 2)}
+              {JSON.stringify(incomimgNodes, null, 2)}
             </pre>
 
             <h3 className="mt-4 text-lg font-medium sm:text-xl">
               <a href="#" className="hover:underline">
                 {" "}
-                {/* current value: {currentNode.data.value ? "true" : "false"} */}
+                 current value: {currentNode.data.value ? "true" : "false"}
               </a>
             </h3>
 
