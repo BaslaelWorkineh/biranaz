@@ -107,7 +107,7 @@ const ConditionerNode = (node: NodeProps) => {
   useEffect(()=>{
 
       const calculateLogic =()=>{
-        let outputValue:any=false;
+        let outputValue:any=currentNode.data.value?currentNode.data.value:false;
         incomimgNodes.forEach((incomingNode)=>{
           outputValue = outputValue || incomingNode.data.value as boolean
         })
