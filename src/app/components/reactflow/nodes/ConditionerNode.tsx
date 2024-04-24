@@ -52,7 +52,7 @@ const style = {
 const ConditionerNode = (node: NodeProps) => {
   const { data }: { data: ConditinalNodeData } = node;
   const [incomimgNodes, setIncomingNodes] = useState<Node[]>([]);
-  const { nodes, edges, getNode,currentNode,setCurrentNode } = useRFStore(useShallow(RFSelector));
+  const { nodes, edges, getNode,currentNode,setCurrentNode,changeNodeData } = useRFStore(useShallow(RFSelector));
   const { isModalOpen,setIsModalOpen } = useNodeModalStore(useShallow(NodeModalSelector));
 
   const selectedNode = getNode(node.id as string) as Node;
@@ -108,15 +108,23 @@ const ConditionerNode = (node: NodeProps) => {
 
       const calculateLogic =()=>{
         let outputValue:any=currentNode.data.value?currentNode.data.value:false;
-        incomimgNodes.forEach((incomingNode)=>{
-          outputValue = outputValue || incomingNode.data.value as boolean
+        incomimgNodes.forEach((incomimgNode)=>{
+          outputValue = outputValue || incomimgNode.data.value as boolean
         })
     
         currentNode.data.output = outputValue
+
+        changeNodeData({
+          id: currentNode.id,
+          data: {
+            ...currentNode.data,output:outputValue,
+          },
+          selected: currentNode.selected,
+        } as NodeProps);
       }
 
       calculateLogic()
-  },[incomimgNodes, currentNode.data])
+  },[incomimgNodes, currentNode.data, currentNode.id, currentNode.selected, changeNodeData])
 
   const handleClick = () => {
     // node.data.label = "Node number"+node.xPos
@@ -156,7 +164,7 @@ const ConditionerNode = (node: NodeProps) => {
 
           <div>
             <Typography variant="h5" color="blue-gray" className="font-medium">
-               data value : {currentNode.data.output?"this is true":"this is false"} 
+               data value : {node.data.output?"this is true":"this is false"} 
               
             </Typography>
             <pre className="w-full flex flex-wrap text text-wrap">
@@ -166,7 +174,7 @@ const ConditionerNode = (node: NodeProps) => {
             <h3 className="mt-4 text-lg font-medium sm:text-xl">
               <a href="#" className="hover:underline">
                 {" "}
-                 current value: {currentNode.data.value ? "true" : "false"}
+                 current value: {node.data.value ? "true" : "false"}
               </a>
             </h3>
 
