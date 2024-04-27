@@ -7,6 +7,7 @@ import {
   NodeToolbar,
   Position,
   getIncomers,
+  getOutgoers
 } from "reactflow";
 
 import {
@@ -30,6 +31,7 @@ import "react-modern-drawer/dist/index.css";
 import { ConditinalNodeData } from "base/types/node";
 import { NodeModalSelector, RFSelector, useNodeModalStore, useRFStore } from "base/contexts/store";
 import { useShallow } from "zustand/react/shallow";
+import { broadcastChange, calculateLogicOutput } from "base/lib/utils/flow";
 
 
 
@@ -55,7 +57,6 @@ const ConditionerNode = (node: NodeProps) => {
   const { nodes, edges, getNode,currentNode,setCurrentNode,changeNodeData } = useRFStore(useShallow(RFSelector));
   const { isModalOpen,setIsModalOpen } = useNodeModalStore(useShallow(NodeModalSelector));
 
-  const selectedNode = getNode(node.id as string) as Node;
   const isEqual = (nodes1: Node[], nodes2: Node[]): boolean => {
     // Check if the two node lists are equal or not
     if (nodes1.length !== nodes2.length) {
@@ -87,7 +88,10 @@ const ConditionerNode = (node: NodeProps) => {
   
 
   useEffect(() => {
-    const incomers: Node[] = getIncomers(selectedNode, nodes, edges);
+
+    const selectedNode = getNode(node.id as string) ;
+    if(selectedNode){
+      const incomers: Node[] = getIncomers(selectedNode, nodes, edges);
     if(incomimgNodes && !isEqual(incomers,incomimgNodes)){
       console.log("incomers not the same")
       setIncomingNodes(incomers);
@@ -95,37 +99,45 @@ const ConditionerNode = (node: NodeProps) => {
     else{
       console.log("incomers are the same")
     }
+    }
     // console.log("check",isEqual(incomers,incomimgNodes),incomers,incomimgNodes)
     // setIncomingNodes(incomers);
     // if(!isEqual(incomers,incomimgNodes)){
     //   alert("is not the same")
     // }
     
-  }, [currentNode, edges, incomimgNodes, node, nodes, selectedNode]);
+  }, [currentNode, edges, getNode, incomimgNodes, node, nodes]);
 
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-      const calculateLogic =()=>{
-        let outputValue:boolean=currentNode.data.value as boolean;
-        incomimgNodes.forEach((incomimgNode)=>{
-          outputValue = outputValue || incomimgNode.data.value as boolean
-        })
+  //     // const calculateLogic =()=>{
+  //     //   let outputValue:boolean=currentNode.data.value as boolean;
+  //     //   incomimgNodes.forEach((incomimgNode)=>{
+  //     //     outputValue = outputValue || incomimgNode.data.value as boolean
+  //     //   })
     
-        currentNode.data.output = outputValue
+  //     //   currentNode.data.output = outputValue
 
-        changeNodeData({
-          id: currentNode.id,
-          data: {
-            ...currentNode.data,output:outputValue,
-          },
-          selected: currentNode.selected,
-        } as NodeProps);
-      }
+  //       // changeNodeData({
+  //       //   id: currentNode.id,
+  //       //   data: {
+  //       //     ...currentNode.data,output:outputValue,
+  //       //   },
+  //       //   selected: currentNode.selected,
+  //       // } as current_node:Node,nodes:Node[],edges:Edge[],action:Function:Node,nodes:Node[],edges:Edge[],action:Functionops);
+  //     // }
+  //     const data  = broadcastChange(getNode(node.id) as Node,calculateLogicOutput)
+      
+  //     // calculateLogic()
+  // },[incomimgNodes, currentNode.data, currentNode.id, currentNode.selected, changeNodeData, getNode, node.id])
 
-      calculateLogic()
-  },[incomimgNodes, currentNode.data, currentNode.id, currentNode.selected, changeNodeData])
 
+  useEffect(() => {
+    
+        broadcastChange(getNode(node.id) as Node,calculateLogicOutput)
+        
+  },[currentNode, currentNode.data, getNode, node.id])
   const handleClick = () => {
     // node.data.label = "Node number"+node.xPos
     setCurrentNode({
@@ -139,6 +151,13 @@ const ConditionerNode = (node: NodeProps) => {
     
   };
 
+  useEffect(() => {
+    
+    broadcastChange(getNode(node.id) as Node,calculateLogicOutput)
+    
+},[node, getNode, node.id,incomimgNodes])
+
+
 
 
 
@@ -146,7 +165,7 @@ const ConditionerNode = (node: NodeProps) => {
     <>
       <Card
         onDoubleClick={handleClick}
-        className="relative rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 max-w-[40rem]"
+        className={`relative rounded-xl  p-4 ${node.data.output?'bg-green-400':'bg-orange-800'} ring-indigo-50 sm:p-6 lg:p-8 max-w-[40rem]`}
       >
         <div className="flex flex-wrap items-start sm:gap-8">
           <div
@@ -174,7 +193,7 @@ const ConditionerNode = (node: NodeProps) => {
             <h3 className="mt-4 text-lg font-medium sm:text-xl">
               <a href="#" className="hover:underline">
                 {" "}
-                 current value: {node.data.value ? "true" : "false"}
+                 current value: {parseInt(node.data.value)>0 ? "true" : "false"}
               </a>
             </h3>
 

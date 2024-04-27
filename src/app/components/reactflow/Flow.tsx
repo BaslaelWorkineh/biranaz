@@ -217,7 +217,7 @@ function Flow() {
         y: event.clientY,
       });
       const newNode: Node = {
-        id: "Idea-" + Math.round(Math.random() * 30 + 100),
+        id: "Idea-" +crypto.randomUUID(),
         type,
         position: position as XYPosition,
         data: {

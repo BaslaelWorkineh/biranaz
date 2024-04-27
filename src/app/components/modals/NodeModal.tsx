@@ -71,6 +71,7 @@ export default function NodeDrawer() {
         <div className="flex items-center justify-between px-4 pb-2 w-full bg-brown-200">
           <Typography variant="h5" color="blue-gray">
             {currentNode.data.label}
+            {currentNode.id}
           </Typography>
           <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
             <svg
