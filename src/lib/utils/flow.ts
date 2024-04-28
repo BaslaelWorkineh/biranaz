@@ -59,3 +59,4 @@ export const calculateLogicOutput = (node: Node,outputValue=false) => {
 
   return { ...node.data, output: outputValue };
 };
+
